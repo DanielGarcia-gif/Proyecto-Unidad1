@@ -6,8 +6,11 @@
     --color-texto: #212529;
     --color-borde: #dee2e6;
     --color-btn-hover: #0056b3;
+    --color-naranja : #F25116;
     --fuente-principal: 'Poppins', sans-serif;
     --padding-seccion: 60px 10%;
+    --fondo-pag-principal: #78AFE3;
+    --fondo-pag-secundario:rgb(206, 226, 245);
     --radio-bordes: 8px;
     --gap-general: 20px;
 }
@@ -50,7 +53,7 @@ header .logo {
     align-items: center;
 }
 .logo-img{
-    width: 80px;
+    width: 75px;
     height: auto;
 }
 header .menu a {
@@ -71,7 +74,7 @@ header .menu a:hover {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    background-color:rgb(206, 226, 245);
+    background:linear-gradient(var(--fondo-pag-principal),35%, var(--fondo-pag-secundario));;
     justify-content: center;
     scroll-margin-top: 70px; /* Para compensar header fijo */
 }
@@ -210,6 +213,16 @@ header .menu a:hover {
     outline: none;
 }
 
+.registro input[type="submit"] {
+    background-color: var(--color-naranja);
+}
+.registro label, legend{
+    color: var(--color-secundario);
+    font-weight: bold;
+}
+.registro legend{
+    margin-bottom: .8rem;
+}
 /* Contacto */
 .contacto h2 {
     color: var(--color-principal);
