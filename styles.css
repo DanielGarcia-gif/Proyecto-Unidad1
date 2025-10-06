@@ -37,7 +37,7 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 10%;
+    padding: 0px 8%;
     z-index: 1000;
     box-shadow: 0 3px 6px rgba(0,0,0,0.1);
 }
@@ -46,8 +46,13 @@ header .logo {
     font-size: 1.8rem;
     font-weight: bold;
     color: white;
+    display: flex;
+    align-items: center;
 }
-
+.logo-img{
+    width: 80px;
+    height: auto;
+}
 header .menu a {
     color: white;
     text-decoration: none;
@@ -76,9 +81,14 @@ header .menu a:hover {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 40px;
-    align-items: center;
+    align-items: center; 
+
 }
 
+.inicio-texto h2{
+    font-size: 2.5rem;
+    color: var(--color-principal);
+}
 .inicio-texto h1 {
     font-size: 3rem;
     margin-bottom: 20px;
@@ -89,9 +99,11 @@ header .menu a:hover {
     margin-bottom: 25px;
     font-size: 1.2rem;
     color: var(--color-texto);
+    text-align: justify;
 }
 
 .btn {
+    text-align: left;
     background-color: var(--color-principal);
     color: white;
     padding: 12px 25px;
@@ -155,13 +167,23 @@ header .menu a:hover {
     margin-bottom: 15px;
 }
 
+/*fondo registro*/
+.fondo-registro{
+    background-color: var(--color-principal);
+    width: 27%;
+    border-radius: 8px;
+    padding: 1.5rem;
+}
+.registro{
+    display: flex;
+    align-items: center;
+}
 /* Registro */
 .registro h2 {
     color: var(--color-principal);
     margin-bottom: 25px;
     text-align: center;
 }
-
 .registro .form-grid {
     display: grid;
     gap: var(--gap-general);

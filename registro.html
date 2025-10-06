@@ -9,7 +9,10 @@
 <body>
 
 <header>
-    <div class="logo">FaDa Sports</div>
+    <div class="logo">
+        <a href="index.html"><img class="logo-img" src="/img/opc1.png" alt="logo empresa"></a>
+        FaDa Sports
+    </div>
     <nav class="menu">
         <a href="index.html">Inicio</a>
         <a href="quienes.html">Quiénes Somos</a>
@@ -21,14 +24,20 @@
 
 <section class="section registro">
     <h2>Registro</h2>
-    <form>
-        <div class="form-grid">
-            <input type="text" placeholder="Nombre completo" required>
-            <input type="email" placeholder="Correo electrónico" required>
-            <input type="password" placeholder="Contraseña" required>
-            <input type="submit" value="Registrarse" class="btn">
-        </div>
-    </form>
+    <div class="fondo-registro">
+        <form>
+            <legend>Llena todos los campos para crear un nuevo usuario</legend>
+            <div class="form-grid">
+                <label>Nombre</label>
+                <input type="text" placeholder="Nombre completo" required>
+                <label>Correo electrónico</label>
+                <input type="email" placeholder="Correo electrónico" required>
+                <label>Contraseña</label>
+                <input type="password" placeholder="Contraseña" required>
+                <input type="submit" value="Registrarse" class="btn">
+            </div>
+        </form>
+    </div>
 </section>
 
 <footer>
