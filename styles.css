@@ -94,7 +94,7 @@ header .menu a:hover {
 
 /* Inicio */
 .inicio {
-    background-image: url(../img/indexImagen.jpg);
+    background-image: url(img/indexImagen.jpg);
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
