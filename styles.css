@@ -188,6 +188,9 @@ header .menu a:hover {
     transform: translateY(-2px);
 }
 /* Quiénes Somos */
+.quienes{
+    align-items: center;
+}
 .quienes h2 {
     color: var(--color-principal);
     margin-bottom: 20px;
@@ -377,14 +380,15 @@ footer {
 
 /* QUIÉNES SOMOS */
 .quienes {
-    background: linear-gradient(135deg, #f0f7ff 0%, #e6efff 100%);
+    background:linear-gradient(var(--fondo-pag-principal), 35%, var(--fondo-pag-secundario));
     text-align: center;
 }
 
 .quienes h2 {
     color: var(--color-principal);
-    margin: 20px 0;
+    margin-top: 5rem;
 }
+
 
 .quienes .info-quienes {
     display: grid;
@@ -541,7 +545,7 @@ footer {
 
 /* Catálogo */
 .catalogo {
-    background: linear-gradient(135deg, #f0f7ff 0%, #e6efff 100%);
+    background: linear-gradient(var(--fondo-pag-principal), 35%, var(--fondo-pag-secundario));
     text-align: center;
     padding: var(--padding-seccion);
 }
@@ -549,7 +553,7 @@ footer {
 .catalogo h2 {
     color: var(--color-principal);
     margin-bottom: 10px;
-    margin-top: 10px;
+    margin-top:0;
     font-family: 'Roboto Condensed';
     font-size: 2.5rem;
 }
@@ -668,7 +672,7 @@ footer {
 
 /* Catálogo */
 .catalogo {
-    background: linear-gradient(135deg, #f0f7ff 0%, #e6efff 100%);
+    background: linear-gradient(var(--fondo-pag-principal), 35%, var(--fondo-pag-secundario));
     text-align: center;
     padding: var(--padding-seccion);
 }
@@ -676,7 +680,7 @@ footer {
 .catalogo h2 {
     color: var(--color-principal);
     margin-bottom: 10px;
-    margin-top: 10px;
+    margin-top: 5rem;
     font-family: 'Roboto Condensed';
     font-size: 2.5rem;
 }
