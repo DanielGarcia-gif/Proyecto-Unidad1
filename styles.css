@@ -108,7 +108,7 @@ header .menu a:hover {
     transform: translateY(-2px);
 }
 
-/* Registro */
+/* Registro 
 .registro h2 {
     color: var(--color-principal);
     margin-bottom: 25px;
@@ -134,12 +134,12 @@ header .menu a:hover {
 }
 
 .registro input[type="text"]:focus,
-.registro input[type="email"]:focus,
+.registro input[type="email"]:focus, 
 .registro input[type="password"]:focus {
     border-color: var(--color-principal);
     box-shadow: 0 0 5px rgba(13,110,253,0.5);
     outline: none;
-}
+}*/
 
 /* Contacto */
 .contacto h2 {
@@ -416,3 +416,129 @@ footer {
         max-width: 180px;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Registro */
+.registro {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #f0f7ff 0%, #e6efff 100%);
+    padding: var(--padding-seccion);
+    min-height: calc(100vh - 80px);
+}
+
+.registro .form-grid {
+    background-color: white;
+    padding: 40px 30px;
+    border-radius: var(--radio-bordes);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    max-width: 450px;
+    width: 100%;
+    display: grid;
+    gap: 20px;
+}
+
+.registro h2 {
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 30px;
+    color: var(--color-principal);
+    font-weight: 700;
+}
+
+.registro input[type="text"],
+.registro input[type="email"],
+.registro input[type="password"] {
+    width: 100%;
+    padding: 15px;
+    font-size: 1rem;
+    border: 1px solid var(--color-borde);
+    border-radius: var(--radio-bordes);
+    transition: all 0.3s;
+}
+
+.registro input[type="text"]:focus,
+.registro input[type="email"]:focus,
+.registro input[type="password"]:focus {
+    border-color: var(--color-principal);
+    box-shadow: 0 0 8px rgba(13,110,253,0.3);
+    outline: none;
+}
+
+.registro input[type="submit"] {
+    background-color: var(--color-principal);
+    color: white;
+    font-weight: 600;
+    font-size: 1.1rem;
+    padding: 15px;
+    cursor: pointer;
+    border-radius: var(--radio-bordes);
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.registro input[type="submit"]:hover {
+    background-color: var(--color-btn-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.registro input::placeholder {
+    color: #999;
+    font-weight: 400;
+}
+
+@media (max-width: 500px) {
+    .registro .form-grid {
+        padding: 30px 20px;
+        gap: 15px;
+    }
+
+    .registro h2 {
+        font-size: 2rem;
+        margin-top: 30px;
+    }
+}
+
