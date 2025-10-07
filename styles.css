@@ -124,21 +124,20 @@ header .menu a:hover {
     text-align: justify;
 }
 
-/* Alinear solo el icono y el título */
 .inicio-beneficios div {
     display: flex;
-    flex-direction: column; /* Para que el párrafo quede debajo */
+    flex-direction: column; 
     align-items: flex-start;
     margin-bottom: 25px;
 }
 
 .inicio-beneficios div h3 {
-    display: flex;          /* Hacemos que el h3 y el ícono estén en línea */
+    display: flex;          
     align-items: center;
     gap: 10px;
     font-size: 1.3rem;
     color: var(--color-secundario);
-    margin: 0 0 8px 0;      /* Margen inferior para separar del párrafo */
+    margin: 0 0 8px 0;      
 }
 
 .inicio-beneficios div svg {
