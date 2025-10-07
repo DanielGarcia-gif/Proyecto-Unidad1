@@ -7,7 +7,7 @@
     --color-borde: #dee2e6;
     --color-btn-hover: #0056b3;
     --color-naranja : #F25116;
-    --fuente-principal: 'Poppins', sans-serif;
+    --fuente-principal: "Roboto", sans-serif;
     --padding-seccion: 60px 10%;
     --fondo-pag-principal: #78AFE3;
     --fondo-pag-secundario:rgb(206, 226, 245);
@@ -46,7 +46,7 @@ header {
 }
 
 header .logo {
-    font-size: 1.8rem;
+    font-size: 2rem;
     font-weight: bold;
     color: white;
     display: flex;
@@ -55,6 +55,12 @@ header .logo {
 .logo-img{
     width: 75px;
     height: auto;
+}
+.logo p{
+    font-family: "Henny Penny", system-ui;
+    font-weight: 400;
+    font-style: normal;
+    letter-spacing: 2px;
 }
 header .menu a {
     color: white;
@@ -82,12 +88,25 @@ header .menu a:hover {
 /* Inicio */
 .inicio {
     display: grid;
+    background-image: url(../img/indexImagen.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 40px;
     align-items: center; 
 
 }
-
+.inicio-texto{
+    position: absolute;
+    background-color: rgb(0 0 0 / 75%);
+    width: 100%;
+    height: 100%;
+    display: flex; /*con flex alineas horizontalmente con justify, con column vertical con jus y hor con aling*/
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
 .inicio-texto h2{
     font-size: 2.5rem;
     color: var(--color-principal);
@@ -101,8 +120,38 @@ header .menu a:hover {
 .inicio-texto p {
     margin-bottom: 25px;
     font-size: 1.2rem;
-    color: var(--color-texto);
+    color: var(--color-fondo);
     text-align: justify;
+}
+
+/* Alinear solo el icono y el título */
+.inicio-beneficios div {
+    display: flex;
+    flex-direction: column; /* Para que el párrafo quede debajo */
+    align-items: flex-start;
+    margin-bottom: 25px;
+}
+
+.inicio-beneficios div h3 {
+    display: flex;          /* Hacemos que el h3 y el ícono estén en línea */
+    align-items: center;
+    gap: 10px;
+    font-size: 1.3rem;
+    color: var(--color-secundario);
+    margin: 0 0 8px 0;      /* Margen inferior para separar del párrafo */
+}
+
+.inicio-beneficios div svg {
+    flex-shrink: 0;
+    width: 30px;
+    height: 30px;
+}
+
+/* Estilo del texto */
+.inicio-beneficios div p {
+    color: var(--color-fondo);
+    margin: 0;
+    font-size: 1rem;
 }
 
 .btn {
@@ -177,7 +226,7 @@ header .menu a:hover {
     border-radius: 8px;
     padding: 1.5rem;
 }
-.registro{
+.registro {
     display: flex;
     align-items: center;
 }
@@ -270,18 +319,21 @@ footer {
 /* Responsivo */
 @media (max-width: 768px) {
     header {
+        position: static;
         flex-direction: column;
-        align-items: flex-start;
+        align-items: center;
         padding: 15px 5%;
     }
 
-    header .menu {
+    header .menu{
         margin-top: 10px;
         display: flex;
+        flex-direction: column;
         flex-wrap: wrap;
     }
 
     header .menu a {
+        text-align: center;
         margin-left: 0;
         margin-right: 15px;
         margin-bottom: 5px;
@@ -294,4 +346,14 @@ footer {
     .inicio-texto p {
         font-size: 1rem;
     }
+    .inicio-beneficios div {
+        align-items: center;
+        text-align: center;
+    }
+    .inicio-beneficios div h3 {
+        justify-content: center;
+    }
 }
+
+
+
