@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito - FaDa Sports</title>
+    <link rel="stylesheet" href="carrito.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">FaDa Sports</div>
+        <nav class="menu">
+            <a href="../index.html">Inicio</a>
+            <a href="../catalogo.html">Catálogo</a>
+            <a href="../contacto.html">Contacto</a>
+        </nav>
+    </header>
+
+    <!-- Contenedor del carrito -->
+    <main class="carrito-container">
+        <h1>Tu Carrito</h1>
+
+        <div class="carrito-productos">
+            <!-- Producto de ejemplo -->
+            <div class="producto-carrito">
+                <img src="../img/Catalogo/Tenis/tenisDep2.jpeg" alt="Tenis Deportivo">
+                <div class="info-producto">
+                    <h3>Tenis Deportivo</h3>
+                    <p class="precio">$1,299 MXN</p>
+                    <p><strong>Talla:</strong> 26</p>
+                    <p><strong>Color:</strong> Negro</p>
+                    <div class="cantidad">
+                        <label for="cantidad1">Cantidad:</label>
+                        <input type="number" id="cantidad1" value="1" min="1">
+                    </div>
+                </div>
+                <button class="btn-eliminar">Eliminar</button>
+            </div>
+
+        </div>
+
+        <div class="carrito-total">
+            <h2>Total: <span>$1,299 MXN</span></h2>
+            <button class="btn-pagar">Proceder al pago</button>
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2025 FaDa Sports. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>
