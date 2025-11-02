@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle de Compra - FaDa Sports</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <header>
+        <div class="logo">FaDa Sports</div>
+        <nav class="menu">
+            <a href="catalogo.html">Catálogo</a>
+            <a href="carrito/carrito.html">Carrito</a>
+            <!-- <a href="detalle_compra.html" class="activo">Detalle de Compra</a> -->
+            <a href="index.html">Salir</a>
+        </nav>
+    </header>
+
+    <section class="detalle-compra">
+        <h2>Resumen de tu pedido</h2>
+
+        <!-- Tabla con el detalle de la compra -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Talla</th>
+                    <th>Color</th>
+                    <th>Cantidad</th>
+                    <th>Precio Unitario</th>
+                    <th>Subtotal</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Playera Deportiva</td>
+                    <td>M</td>
+                    <td>Azul</td>
+                    <td>2</td>
+                    <td>$299.00</td>
+                    <td>$598.00</td>
+                </tr>
+                <tr>
+                    <td>Sudadera Ligera</td>
+                    <td>L</td>
+                    <td>Negro</td>
+                    <td>1</td>
+                    <td>$499.00</td>
+                    <td>$499.00</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="resumen-final">
+            <div class="info-envio">
+                <h3>Dirección de Envío</h3>
+                <p><strong>Dirección:</strong> Calle del Deporte #123</p>
+                <p><strong>Ciudad:</strong> Ciudad de México</p>
+                <p><strong>Código Postal:</strong> 01234</p>
+                <p><strong>Costo de Envío:</strong> $80.00</p>
+            </div>
+
+            <div class="total-pago">
+                <p><strong>Total de Productos:</strong> $1,097.00</p>
+                <p><strong>Total Final (con envío):</strong> <span class="total">$1,177.00</span></p>
+                <a href="#" class="btn-confirmar">Proceder al Pago</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 FaDa Sports. Todos los derechos reservados.</p>
+    </footer>
+
+</body>
+</html>

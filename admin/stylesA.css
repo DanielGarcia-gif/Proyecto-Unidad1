@@ -1,0 +1,253 @@
+/* --- ESTILO GENERAL --- */
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background-color: #f8f9fa;
+    color: #212529;
+}
+
+/* --- HEADER --- */
+header {
+    background: linear-gradient(90deg, #0d6efd, #007bff);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 10%;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.menu a {
+    color: white;
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+.menu a:hover, .menu a.activo {
+    text-decoration: underline;
+}
+
+/* --- PANEL ADMIN --- */
+.admin-panel {
+    padding: 100px 10%;
+}
+
+.admin-panel h2 {
+    text-align: center;
+    font-size: 2rem;
+    color: #0d6efd;
+    margin-bottom: 40px;
+}
+
+/* --- FORMULARIO --- */
+.form-producto {
+    background: #fff;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    margin-bottom: 40px;
+}
+
+.form-producto h3 {
+    color: #0d6efd;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.form-producto select {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0 15px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+}
+
+.form-producto input {
+    width: 97%;
+    padding: 10px;
+    margin: 8px 0 15px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+}
+
+.form-producto button {
+    display: block;
+    margin: 0 auto;
+    background: linear-gradient(90deg, #0d6efd, #007bff);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s ease;
+}
+
+.form-producto button:hover {
+    background: linear-gradient(90deg, #007bff, #0d6efd);
+    transform: scale(1.05);
+}
+
+/* --- TABLA DE PRODUCTOS --- */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+th, td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #0d6efd;
+    color: white;
+}
+
+td img {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.acciones button {
+    padding: 6px 12px;
+    margin: 0 5px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.editar {
+    background-color: #ffc107;
+    color: #212529;
+}
+
+.eliminar {
+    background-color: #dc3545;
+    color: white;
+}
+
+.editar:hover {
+    background-color: #e0a800;
+}
+
+.eliminar:hover {
+    background-color: #c82333;
+}
+
+/* --- FOOTER --- */
+footer {
+    text-align: center;
+    padding: 20px;
+    background: #0d6efd;
+    color: white;
+    margin-top: 50px;
+}
+
+
+/* =========================
+   ESTILOS PARA EDICIÓN DE PRODUCTO
+   ========================= */
+.imagen-actual {
+    text-align: center;
+    margin: 1rem 0;
+}
+
+.imagen-actual img {
+    width: 120px;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 0 8px rgba(0,0,0,0.2);
+}
+
+.botones-accion {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 2rem;
+}
+
+.guardar-cambios {
+    background-color: #0d6efd;
+    color: white;
+    border: none;
+    padding: 0.7rem 1.5rem;
+    font-size: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.guardar-cambios:hover {
+    background-color: #084298;
+}
+
+.cancelar {
+    background-color: #6c757d;
+    color: white;
+    text-decoration: none;
+    padding: 0.7rem 1.5rem;
+    border-radius: 8px;
+    transition: background 0.3s;
+}
+
+.cancelar:hover {
+    background-color: #495057;
+}
+
+
+/* === BOTONES GENERALES === */
+button,
+a.editar,
+a.eliminar {
+    display: inline-block;
+    padding: 8px 14px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    text-decoration: none; /* quita el subrayado de los <a> */
+    color: #fff;
+    transition: background-color 0.3s ease;
+}
+
+/* Botón editar (amarillo) */
+a.editar,
+button.editar {
+    background-color: #f1c40f;
+}
+
+a.editar:hover,
+button.editar:hover {
+    background-color: #d4ac0d;
+}
+
+/* Botón eliminar (rojo) */
+a.eliminar,
+button.eliminar {
+    background-color: #e74c3c;
+}
+
+a.eliminar:hover,
+button.eliminar:hover {
+    background-color: #c0392b;
+}
+
+

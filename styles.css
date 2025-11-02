@@ -1264,3 +1264,82 @@ footer {
         width: 100%;
     }
 }
+
+/* === DETALLE DE COMPRA === */
+.detalle-compra {
+    padding: 120px 10% 60px;
+    background-color: #f8f9fa;
+    text-align: center;
+}
+
+.detalle-compra h2 {
+    margin-bottom: 30px;
+    color: var(--color-principal);
+    font-size: 2rem;
+}
+
+.detalle-compra table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 40px;
+}
+
+.detalle-compra th, .detalle-compra td {
+    padding: 12px 15px;
+    text-align: center;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.detalle-compra th {
+    background-color: var(--color-principal);
+    color: white;
+    font-weight: 600;
+}
+
+.resumen-final {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 40px;
+    text-align: left;
+}
+
+.info-envio, .total-pago {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    flex: 1;
+    min-width: 300px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.total-pago {
+    text-align: right;
+}
+
+.total-pago .total {
+    font-size: 1.4rem;
+    color: var(--color-principal);
+    font-weight: bold;
+}
+
+.btn-confirmar {
+    display: inline-block;
+    background: linear-gradient(90deg, #0d6efd, #007bff);
+    color: white;
+    text-decoration: none;
+    padding: 12px 25px;
+    border-radius: 25px;
+    font-weight: bold;
+    transition: transform 0.3s, background 0.3s;
+}
+
+.btn-confirmar:hover {
+    transform: scale(1.05);
+    background: linear-gradient(90deg, #007bff, #0d6efd);
+}

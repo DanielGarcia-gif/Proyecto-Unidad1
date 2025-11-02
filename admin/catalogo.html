@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración - FaDa Sports</title>
+    <link rel="stylesheet" href="stylesA.css">
+</head>
+<body>
+
+    <header>
+        <div class="logo">FaDa Sports - Admin</div>
+        <nav class="menu">
+            <a href="catalogo.html">Productos</a>
+            <!-- <a href="admin_productos.html" class="activo">Productos</a> -->
+            <a href="#">Usuarios</a>
+            <a href="#">Pedidos</a>
+            <a href="../index.html">Salir</a>
+        </nav>
+    </header>
+
+    <section class="admin-panel">
+        <h2>Gestión de Productos</h2>
+
+        <!-- Formulario para agregar o editar producto -->
+        <form class="form-producto" id="formProducto">
+            <h3>Agregar / Editar Producto</h3>
+
+            <!-- Datos generales -->
+            <label>Nombre del producto:</label>
+            <input type="text" name="nombre" placeholder="Ej. Camisa deportiva" required>
+
+            <label>Descripción:</label>
+            <input type="text" name="descripcion" placeholder="Breve descripción del producto..." required>
+
+            <label>Material:</label>
+            <input type="text" name="material" placeholder="Ej. Poliéster, Algodón">
+
+            <label>Imagen:</label>
+            <input type="file" name="imagen" accept="image/*">
+
+            <hr>
+
+            <!-- Variantes -->
+            <h4>Detalles de variante (color, talla, precio y stock)</h4>
+
+            <label>Color:</label>
+            <select name="id_color" required>
+                <option value="">Selecciona un color</option>
+                <!-- Estos se llenarán dinámicamente con PHP -->
+                <option value="1">Rojo</option>
+                <option value="2">Negro</option>
+                <option value="3">Azul</option>
+            </select>
+
+            <label>Talla:</label>
+            <select name="id_talla" required>
+                <option value="">Selecciona una talla</option>
+                <option value="1">S</option>
+                <option value="2">M</option>
+                <option value="3">L</option>
+                <option value="4">XL</option>
+            </select>
+
+            <label>Precio:</label>
+            <input type="number" name="precio" placeholder="Ej. 499.00" step="0.01" required>
+
+            <label>Stock:</label>
+            <input type="number" name="stock" min="0" placeholder="Ej. 25" required>
+
+            <label>SKU (código único):</label>
+            <input type="text" name="sku" placeholder="Ej. CAMISA-ROJA-M">
+
+            <button type="submit" class="btn-guardar">Guardar Producto</button>
+        </form>
+
+        <!-- Tabla de productos existentes -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Imagen</th>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Material</th>
+                    <th>Color</th>
+                    <th>Talla</th>
+                    <th>Precio</th>
+                    <th>Stock</th>
+                    <th>SKU</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><img src="../img/Catalogo/Playeras/playeraDep.jpeg" alt="Playera"></td>
+                    <td>Playera Deportiva</td>
+                    <td>Camisa ligera y cómoda para entrenamientos intensos.</td>
+                    <td>Poliéster</td>
+                    <td>Azul</td>
+                    <td>M</td>
+                    <td>$299.00</td>
+                    <td>50</td>
+                    <td>CAMISA-AZUL-M</td>
+                    <td class="acciones">
+                        <!-- <button class="editar">Editar</button> -->
+                          <a href="editar.html" class="editar">Editar</a>
+                        <button class="eliminar">Eliminar</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 FaDa Sports. Panel de administración.</p>
+    </footer>
+
+</body>
+</html>

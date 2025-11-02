@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Producto - FaDa Sports</title>
+    <link rel="stylesheet" href="stylesA.css">
+</head>
+<body>
+
+    <header>
+        <div class="logo">FaDa Sports - Admin</div>
+        <nav class="menu">
+            <a href="catalogo.html">Productos</a>
+            <a href="#">Usuarios</a>
+            <a href="#">Pedidos</a>
+            <a href="index.html">Salir</a>
+        </nav>
+    </header>
+
+    <section class="admin-panel">
+        <h2>Editar Producto</h2>
+
+        <form class="form-producto" id="formEditarProducto">
+            <h3>Modifica la información del producto</h3>
+
+            <label>ID del producto:</label>
+            <input type="text" name="id_producto" value="123" readonly>
+
+            <label>Nombre del producto:</label>
+            <input type="text" name="nombre" value="Playera Deportiva" required>
+
+            <label>Precio:</label>
+            <input type="number" name="precio" value="299" required>
+
+            <label>Categoría:</label>
+            <select name="categoria" required>
+                <option value="Playeras" selected>Playeras</option>
+                <option value="Pantalones">Pantalones</option>
+                <option value="Tenis">Tenis</option>
+                <option value="Sudaderas">Sudaderas</option>
+            </select>
+
+            <label>Tallas disponibles:</label>
+            <input type="text" name="tallas" value="S, M, L, XL">
+
+            <label>Colores disponibles:</label>
+            <input type="text" name="colores" value="Azul, Blanco">
+
+            <label>Material:</label>
+            <input type="text" name="material" value="Poliéster">
+
+            <label>Descripción:</label>
+            <input type="text" name="descripcion" value="Playera cómoda y ligera para entrenar.">
+
+            <label>Imagen actual:</label>
+            <div class="imagen-actual">
+                <img src="../img/Catalogo/Playeras/playeraDep.jpeg" alt="Imagen actual">
+            </div>
+
+            <label>Actualizar imagen (opcional):</label>
+            <input type="file" name="imagen" accept="image/*">
+
+            <div class="botones-accion">
+                <button type="submit" class="guardar-cambios">Guardar Cambios</button>
+                <a href="catalogo.html" class="cancelar">Cancelar</a>
+            </div>
+        </form>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 FaDa Sports. Panel de administración.</p>
+    </footer>
+
+</body>
+</html>
