@@ -47,16 +47,32 @@ header .logo {
     color: white;
 }
 
+header .menu {
+    display: flex;
+    gap: 25px;
+}
+
 header .menu a {
     color: white;
     text-decoration: none;
-    margin-left: 25px;
     font-weight: 500;
-    transition: color 0.3s;
+    font-size: 1.05rem;
+    position: relative;
 }
 
-header .menu a:hover {
-    color: var(--color-btn-hover);
+header .menu a::after {
+    content: '';
+    position: absolute;
+    width: 0%;
+    height: 2px;
+    left: 0;
+    bottom: -3px;
+    background-color: #ffd700;
+    transition: width 0.3s;
+}
+
+header .menu a:hover::after {
+    width: 100%;
 }
 
 /* Secciones */
@@ -64,6 +80,7 @@ header .menu a:hover {
     margin-top: 40px;
     padding: var(--padding-seccion);
     min-height: 100vh;
+    width: 100%;
     display: flex;
     flex-direction: column;
     background-color: rgb(206, 226, 245);
@@ -72,7 +89,7 @@ header .menu a:hover {
 }
 
 /* Inicio */
-.inicio {
+/*.inicio {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 40px;
@@ -89,7 +106,7 @@ header .menu a:hover {
     margin-bottom: 25px;
     font-size: 1.2rem;
     color: var(--color-texto);
-}
+}*/
 
 .btn {
     background-color: var(--color-principal);
@@ -107,6 +124,84 @@ header .menu a:hover {
     background-color: var(--color-btn-hover);
     transform: translateY(-2px);
 }
+
+.inicio {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;  /* centra vertical */
+    justify-content: center;  /* centra horizontal */
+    text-align: center;
+    color: white;
+    overflow: hidden;
+    margin-top: 0;
+    padding: 0;
+}
+
+/* Imagen de fondo */
+.inicio-fondo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* llena todo el contenedor */
+    filter: brightness(60%); /* oscurece la imagen */
+    z-index: 0;
+}
+
+/* Capa oscura (opcional si quieres más oscuridad) */
+.inicio-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 1;
+}
+
+/* Texto centrado sobre el fondo */
+.inicio-textoI {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    padding: 20px;
+    text-align: center; /* asegura alineación */
+    margin: 0 auto; /* centra horizontalmente el bloque */
+}
+
+.inicio-textoI h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.inicio-textoI h1 span {
+    color: #0d6efd; /* color principal */
+}
+
+.inicio-textoI p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    color: white;
+}
+
+.btn-gradiente {
+    background: linear-gradient(90deg, #0d6efd, #007bff);
+    color: #fff;
+    padding: 12px 30px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s ease;
+}
+
+.btn-gradiente:hover {
+    background: linear-gradient(90deg, #007bff, #0d6efd);
+    transform: scale(1.05);
+}
+
 
 /* Registro 
 .registro h2 {
@@ -140,8 +235,6 @@ header .menu a:hover {
     box-shadow: 0 0 5px rgba(13,110,253,0.5);
     outline: none;
 }*/
-
-/* Contacto */
 
 
 /* Footer */
