@@ -15,13 +15,29 @@
 <header>
     <div class="logo">FaDa Sports</div> 
     <nav class="menu">
-        <a href="../index.html">Inicio</a>
+        <a href="index.php">Inicio</a>
         <a href="quienes.html">Quiénes Somos</a>
         <a href="catalogo.php">Catálogo</a>
         <a href="carrito/carrito.php">Carrito</a>
-        <a href="../registro.html">Registro</a>
-        <!-- <a href="#">Cerrar sesión</a> -->
-        <a href="../contacto.html">Contacto</a>
+        <?php if (!empty($_SESSION['id_usuario'])): ?>
+            <a href="php/logout.php">Salir (<?php echo htmlspecialchars($_SESSION['nombre']); ?>)</a>
+                <?php
+                    // Mostrar enlace Admin solo si el rol en sesión es Admin (mejor comprobación que id numérico)
+                    $esAdmin = false;
+                    if (!empty($_SESSION['rol_nombre'])) {
+                        $esAdmin = ($_SESSION['rol_nombre'] === 'Admin');
+                    } elseif (!empty($_SESSION['id_rol'])) {
+                        // fallback por compatibilidad
+                        $esAdmin = ($_SESSION['id_rol'] == 1);
+                    }
+                ?>
+                <?php if ($esAdmin): ?>
+                    <a href="admin/dashboard.php">Admin</a>
+                <?php endif; ?>
+        <?php else: ?>
+            <a href="registro.php">Registro / Login</a>
+        <?php endif; ?>
+        <a href="contacto.html">Contacto</a>
     </nav>
 </header>
 
@@ -31,7 +47,7 @@
     <div class="inicio-textoI">
         <h1>Bienvenido a <span>FaDa Sports</span></h1>
         <p>La mejor tienda de ropa deportiva en línea. Calidad, comodidad y estilo para tu entrenamiento, con garantía de satisfacción y envíos rápidos a todo el país.</p>
-        <a href="catalogo.html" class="btn btn-gradiente">Ver Catálogo</a>
+        <a href="catalogo.php" class="btn btn-gradiente">Ver Catálogo</a>
     </div>
 </section>
 
@@ -44,19 +60,19 @@
             <img src="img/Catalogo/Tenis/tenisDep2.jpeg" alt="Producto 1">
             <h3>Tenis Running</h3>
             <p>Comodidad y rendimiento para tus entrenamientos.</p>
-            <a href="catalogo.html" class="btn btn-gradiente">Comprar</a>
+            <a href="catalogo.php" class="btn btn-gradiente">Comprar</a>
         </div>
         <div class="producto">
             <img src="img/Catalogo/Sudaderas/sudaderaDep.jpeg" alt="Producto 2">
             <h3>Sudadera Deportiva</h3>
             <p>Perfecta para entrenar o salir con estilo.</p>
-            <a href="catalogo.html" class="btn btn-gradiente">Comprar</a>
+            <a href="catalogo.php" class="btn btn-gradiente">Comprar</a>
         </div>
         <div class="producto">
             <img src="img/Catalogo/Pantalones/pantalonDep2.jpeg" alt="Producto 3">
             <h3>Shorts de Entrenamiento</h3>
             <p>Ligeros, cómodos y resistentes.</p>
-            <a href="catalogo.html" class="btn btn-gradiente">Comprar</a>
+            <a href="catalogo.php" class="btn btn-gradiente">Comprar</a>
         </div>
     </div>
 </section>

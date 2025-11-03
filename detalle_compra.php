@@ -50,7 +50,7 @@ $conn->close();
     <nav class="menu">
         <a href="../catalogo.html">Catálogo</a>
         <a href="../carrito/carrito.php">Carrito</a>
-        <a href="../index.html">Salir</a>
+        <a href="index.php">Salir</a>
     </nav>
 </header>
 
@@ -83,7 +83,7 @@ $conn->close();
     </table>
 
     <div class="resumen-final">
-        <form action="/php/pr" method="POST">
+        <form action="php/procesar_pago.php" method="POST">
             <h3>Información de Envío</h3>
             <label>Dirección:</label>
             <input type="text" name="direccion" required>

@@ -20,7 +20,7 @@ $sql = "SELECT
     p.categoria,
     GROUP_CONCAT(DISTINCT t.nombre_talla ORDER BY t.id_talla SEPARATOR ', ') AS tallas,
     GROUP_CONCAT(DISTINCT c.nombre_color ORDER BY c.id_color SEPARATOR ', ') AS colores,
-    ANY_VALUE(v.precio)as precio
+    MIN(v.precio)as precio
     FROM productos p
     LEFT JOIN variantesProducto v ON p.id_producto = v.id_producto
     LEFT JOIN tallas t ON v.id_talla = t.id_talla
@@ -50,11 +50,11 @@ if ($result->num_rows > 0) {
 <header>
     <div class="logo">FaDa Sports</div>
     <nav class="menu">
-        <a href="index.html">Inicio</a>
+        <a href="index.php">Inicio</a>
         <a href="quienes.html">Quiénes Somos</a>
-        <a href="catalogo.html">Catálogo</a>
-        <a href="carrito/carrito.html">Carrito</a>
-        <a href="registro.html">Registro</a>
+        <a href="catalogo.php">Catálogo</a>
+        <a href="carrito/carrito.php">Carrito</a>
+    <a href="registro.php">Registro</a>
         <a href="contacto.html">Contacto</a>
     </nav>
 </header>

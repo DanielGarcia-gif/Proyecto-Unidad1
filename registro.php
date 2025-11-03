@@ -1,3 +1,9 @@
+<?php
+session_start();
+$register_error = $_SESSION['register_error'] ?? null;
+$login_error = $_SESSION['login_error'] ?? null;
+unset($_SESSION['register_error'], $_SESSION['login_error']);
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -15,7 +21,7 @@
         <a href="quienes.html">Quiénes Somos</a>
         <a href="catalogo.php">Catálogo</a>
         <a href="carrito/carrito.php">Carrito</a>
-        <a href="registro.html">Registro</a>
+        <a href="registro.php">Registro</a>
         <a href="contacto.html">Contacto</a>
     </nav>
 </header>
@@ -42,6 +48,7 @@
             <div class="forms-container">
                 <div class="form-box login-box">
                     <h2 style="padding-bottom: 10px;">Iniciar Sesión</h2>
+                    <?php if ($login_error): ?><div class="alert error"><?php echo htmlspecialchars($login_error); ?></div><?php endif; ?>
                     <form method="post" action="php/login.php">
                         <input type="email" name="email" placeholder="Correo electrónico" required>
                         <input type="password" name="password" placeholder="Contraseña" required>
@@ -51,6 +58,7 @@
 
                 <div class="form-box registro-box">
                     <h2 style="padding-bottom: 10px;">Registro</h2>
+                    <?php if ($register_error): ?><div class="alert error"><?php echo htmlspecialchars($register_error); ?></div><?php endif; ?>
                     <form method="post" action="php/register.php">
                         <input type="text" name="nombre" placeholder="Nombre completo" required>
                         <input type="email" name="email" placeholder="Correo electrónico" required>

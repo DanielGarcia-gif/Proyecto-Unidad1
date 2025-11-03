@@ -17,8 +17,8 @@ $total = 0;
 <header>
     <div class="logo">FaDa Sports</div>
     <nav class="menu">
-        <a href="../index.html">Inicio</a>
-        <a href="../catalogo.html">Catálogo</a>
+        <a href="../index.php">Inicio</a>
+        <a href="../catalogo.php">Catálogo</a>
         <a href="../contacto.html">Contacto</a>
     </nav>
 </header>

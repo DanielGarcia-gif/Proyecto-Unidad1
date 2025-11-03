@@ -55,8 +55,8 @@ $conn->close();
         <span class="logo-text">FaDa Sports</span>
     </div>
     <nav class="menu">
-        <a href="../index.html">Inicio</a>
-        <a href="../catalogo.html">Catálogo</a>
+        <a href="../index.php">Inicio</a>
+        <a href="../catalogo.php">Catálogo</a>
         <a href="../contacto.html">Contacto</a>
     </nav>
 </header>
