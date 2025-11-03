@@ -1374,6 +1374,13 @@ footer {
     font-family: 'Poppins', sans-serif;
 }
 
+.resumen-final form {
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    width: 100%;
+}
+
 .resumen-final h3 {
     color: #1a73e8;
     margin-bottom: 15px;
