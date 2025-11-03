@@ -83,7 +83,7 @@ $conn->close();
     </table>
 
     <div class="resumen-final">
-        <form action="procesar_pago.php" method="POST">
+        <form action="/php/pr" method="POST">
             <h3>Información de Envío</h3>
             <label>Dirección:</label>
             <input type="text" name="direccion" required>
