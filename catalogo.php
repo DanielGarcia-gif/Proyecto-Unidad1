@@ -3,7 +3,7 @@ require_once 'php/conexion.php';
 
 // Traer todos los productos con su primera variante (solo para mostrar precio ejemplo)
 $sql = "SELECT p.id_producto, p.nombre, p.descripcion, p.material, p.imagen, p.categoria,
-        ANY_VALUE(v.precio) as precio
+        MIN(v.precio) as precio
         FROM productos p
         LEFT JOIN variantesProducto v ON p.id_producto = v.id_producto
         GROUP BY p.id_producto
@@ -20,7 +20,7 @@ $sql = "SELECT
     p.categoria,
     GROUP_CONCAT(DISTINCT t.nombre_talla ORDER BY t.id_talla SEPARATOR ', ') AS tallas,
     GROUP_CONCAT(DISTINCT c.nombre_color ORDER BY c.id_color SEPARATOR ', ') AS colores,
-    ANY_VALUE(v.precio)as precio
+    MIN(v.precio)as precio
     FROM productos p
     LEFT JOIN variantesProducto v ON p.id_producto = v.id_producto
     LEFT JOIN tallas t ON v.id_talla = t.id_talla

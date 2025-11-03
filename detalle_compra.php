@@ -82,7 +82,7 @@ $conn->close();
         </tbody>
     </table>
 
-    <div class="resumen-final">
+    <div class="resumen-finall">
         <form action="/php/pr" method="POST">
             <h3>Información de Envío</h3>
             <label>Dirección:</label>
