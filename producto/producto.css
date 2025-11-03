@@ -161,6 +161,7 @@ header .menu a:hover::after {
     font-size: 1rem;
     cursor: pointer;
     transition: all 0.3s;
+    margin-bottom: 15px;
 }
 
 .seleccion-talla select:focus {

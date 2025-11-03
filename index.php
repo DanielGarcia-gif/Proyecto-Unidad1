@@ -1,3 +1,7 @@
+<?php
+    session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -12,9 +16,9 @@
     <div class="logo">FaDa Sports</div> 
     <nav class="menu">
         <a href="../index.html">Inicio</a>
-        <a href="../quienes.html">Quiénes Somos</a>
-        <a href="../catalogo.html">Catálogo</a>
-        <a href="carrito/carrito.html">Carrito</a>
+        <a href="quienes.html">Quiénes Somos</a>
+        <a href="catalogo.php">Catálogo</a>
+        <a href="carrito/carrito.php">Carrito</a>
         <a href="../registro.html">Registro</a>
         <!-- <a href="#">Cerrar sesión</a> -->
         <a href="../contacto.html">Contacto</a>
