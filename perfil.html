@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil de Usuario - FaDa Sports</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header>
+    <div class="logo">FaDa Sports</div>
+    <nav class="menu">
+        <a href="index.html">Inicio</a>
+        <a href="catalogo.html">Catálogo</a>
+        <a href="perfil.html">Mi Perfil</a>
+        <a href="contacto.html">Contacto</a>
+        <a href="logout.php" class="cerrar-sesion">Cerrar Sesión</a>
+    </nav>
+</header>
+
+<section class="perfil section">
+
+    <h1>Mi Perfil</h1>
+
+    <!-- DATOS DEL USUARIO -->
+    <div class="perfil-card">
+        <h2>Datos del Usuario</h2>
+        <p><strong>Nombre:</strong> Juan Pérez</p>
+        <p><strong>Correo:</strong> juanperez@example.com</p>
+        <p><strong>Teléfono:</strong> 55 1234 5678</p>
+
+        <button class="btn">Editar Información</button>
+    </div>
+
+    <!-- HISTORIAL DE COMPRAS -->
+    <div class="perfil-card">
+        <h2>Historial de Compras</h2>
+
+        <div class="tabla-container">
+            <table class="tabla-compras">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Producto</th>
+                        <th>Fecha</th>
+                        <th>Monto</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>0234</td>
+                        <td>Playera DryFit</td>
+                        <td>2025-02-10</td>
+                        <td>$450</td>
+                        <td>Entregado</td>
+                    </tr>
+                    <tr>
+                        <td>0201</td>
+                        <td>Short Deportivo Pro</td>
+                        <td>2025-01-22</td>
+                        <td>$320</td>
+                        <td>Entregado</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- DIRECCIONES -->
+    <div class="perfil-card">
+        <h2>Direcciones de Envío</h2>
+
+        <ul class="lista-direcciones">
+            <li>
+                <strong>Casa:</strong> Calle Futura 123, CDMX  
+            </li>
+            <li>
+                <strong>Trabajo:</strong> Av. Reforma 500, CDMX  
+            </li>
+        </ul>
+
+        <button class="btn">Agregar Nueva Dirección</button>
+    </div>
+
+    <!-- TARJETA -->
+    <div class="perfil-card">
+        <h2>Método de Pago</h2>
+
+        <div class="tarjeta-info">
+            <div class="tarjeta-icono">
+                <img src="img/tarjeta.png" alt="Tarjeta">
+            </div>
+
+            <div class="tarjeta-detalles">
+                <p><strong>Nombre en la Tarjeta:</strong> Juan Pérez</p>
+                <p><strong>Número:</strong> •••• •••• •••• 4587</p>
+                <p><strong>Expiración:</strong> 08/27</p>
+            </div>
+
+            <button class="btn btn-tarjeta">Actualizar Tarjeta</button>
+        </div>
+    </div>
+
+</section>
+
+<footer>
+    <p>&copy; 2025 FaDa Sports. Todos los derechos reservados.</p>
+</footer>
+
+</body>
+</html>

@@ -1344,3 +1344,209 @@ footer {
     transform: scale(1.05);
     background: linear-gradient(90deg, #007bff, #0d6efd);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/********************************
+        PERFIL DE USUARIO
+*********************************/
+
+.perfil {
+    padding-top: 120px;
+    background: linear-gradient(135deg, #eef5ff 0%, #d9e7ff 100%);
+}
+
+.perfil h1 {
+    text-align: center;
+    font-size: 3rem;
+    color: var(--color-principal);
+    margin-bottom: 40px;
+}
+
+.perfil-card {
+    background: white;
+    padding: 30px;
+    margin: 25px auto;
+    width: 100%;
+    max-width: 900px;
+    border-radius: var(--radio-bordes);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    border-left: 5px solid var(--color-principal);
+}
+
+.perfil-card h2 {
+    margin-bottom: 20px;
+    color: var(--color-principal);
+}
+
+/* TABLA DE COMPRAS */
+.tabla-container {
+    overflow-x: auto;
+}
+
+.tabla-compras {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.tabla-compras th,
+.tabla-compras td {
+    padding: 12px 15px;
+    border-bottom: 1px solid var(--color-borde);
+}
+
+.tabla-compras th {
+    background-color: var(--color-principal);
+    color: white;
+    font-weight: 600;
+}
+
+.tabla-compras tr:hover {
+    background-color: #f1f5ff;
+}
+
+/* LISTA DE DIRECCIONES */
+.lista-direcciones {
+    list-style: none;
+    padding-left: 0;
+}
+
+.lista-direcciones li {
+    padding: 10px 0;
+    border-bottom: 1px solid var(--color-borde);
+    color: var(--color-texto);
+}
+
+/* TARJETA */
+.tarjeta-info {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: white;
+    padding: 20px;
+    border-radius: var(--radio-bordes);
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    border-left: 5px solid var(--color-principal);
+}
+
+.tarjeta-icono img {
+    width: 70px;
+    opacity: 0.85;
+}
+
+.tarjeta-detalles p {
+    margin: 6px 0;
+    color: var(--color-texto);
+    font-size: 1.05rem;
+}
+
+.btn-tarjeta {
+    margin-left: auto;
+    background: var(--color-principal);
+    color: white;
+    padding: 10px 18px;
+    border-radius: var(--radio-bordes);
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+    transition: 0.3s ease;
+}
+
+.btn-tarjeta:hover {
+    background: var(--color-btn-hover);
+    transform: translateY(-2px);
+}
+
+.cerrar-sesion {
+    background: #dc3545;
+    padding: 8px 15px;
+    border-radius: 6px;
+    color: white !important;
+    transition: 0.3s ease;
+}
+
+.cerrar-sesion:hover {
+    background: #b02a37;
+}
+
+/* RESPONSIVO */
+@media (max-width: 700px) {
+    .tarjeta-info {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .btn-tarjeta {
+        width: 100%;
+    }
+}
