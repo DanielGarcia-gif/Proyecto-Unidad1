@@ -2,6 +2,23 @@
 session_start();
 require 'php/conexion.php';
 
+//AQUI DEJAR DE PONER CRTL + Z XD XD XD XD XD XD
+$idUsuario = $_SESSION['id_usuario'] ?? null;
+$direcciones = [];
+
+if ($idUsuario) {
+    $sqlDir = "SELECT id_direccion, direccion, ciudad, codigo_postal, es_predeterminada
+               FROM direccionesUsuario
+               WHERE id_usuario = $idUsuario";
+    $resDir = $conn->query($sqlDir);
+
+    if ($resDir && $resDir->num_rows > 0) {
+        while ($d = $resDir->fetch_assoc()) {
+            $direcciones[] = $d;
+        }
+    }
+}
+
 if (!isset($_SESSION['carrito']) || empty($_SESSION['carrito'])) {
     echo "Tu carrito está vacío.";
     exit;
@@ -41,6 +58,7 @@ $conn->close();
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Detalle de Compra - FaDa Sports</title>
+<link rel="icon" type="img/logo.jpg" href="img/logo.jpg">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -48,7 +66,7 @@ $conn->close();
 <header>
     <div class="logo">FaDa Sports</div>
     <nav class="menu">
-        <a href="../catalogo.html">Catálogo</a>
+        <a href="catalogo.php">Catálogo</a>
         <a href="../carrito/carrito.php">Carrito</a>
         <a href="index.php">Salir</a>
     </nav>
@@ -85,12 +103,30 @@ $conn->close();
     <div class="resumen-final">
         <form action="php/procesar_pago.php" method="POST">
             <h3>Información de Envío</h3>
-            <label>Dirección:</label>
-            <input type="text" name="direccion" required>
-            <label>Ciudad:</label>
-            <input type="text" name="ciudad" required>
-            <label>Código Postal:</label>
-            <input type="text" name="codigo_postal" required>
+                <?php if (!empty($direcciones)): ?>
+        <label>Elige una dirección guardada:</label>
+        <select name="id_direccion" required>
+            <?php foreach ($direcciones as $dir): ?>
+                <option value="<?= $dir['id_direccion'] ?>">
+                    <?= htmlspecialchars($dir['direccion']) ?>, 
+                    <?= htmlspecialchars($dir['ciudad']) ?>, 
+                    CP <?= htmlspecialchars($dir['codigo_postal']) ?>
+                    <?= $dir['es_predeterminada'] ? ' (Predeterminada)' : '' ?>
+                </option>
+            <?php endforeach; ?>
+        </select>
+
+    <?php else: ?>
+        <p style="color:red;">No tienes direcciones guardadas. Agrega una en tu Perfil.</p>
+
+        <label>Dirección:</label>
+        <input type="text" name="direccion" required>
+        <label>Ciudad:</label>
+        <input type="text" name="ciudad" required>
+        <label>Código Postal:</label>
+        <input type="text" name="codigo_postal" required>
+
+    <?php endif; ?>
 
             <p><strong>Total de Productos:</strong> $<?= number_format($totalProductos,2) ?></p>
             <p><strong>Costo de Envío:</strong> $<?= number_format($costoEnvio,2) ?></p>

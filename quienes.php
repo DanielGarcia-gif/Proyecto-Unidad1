@@ -1,0 +1,83 @@
+<?php
+session_start();
+?>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FaDa Sports - Quiénes Somos</title>
+    <link rel="icon" type="img/logo.jpg" href="img/logo.jpg">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header>
+    <div class="logo">FaDa Sports</div>
+    <nav class="menu">
+        <a href="index.php">Inicio</a>
+        <a href="quienes.php" class="activo">Quiénes Somos</a>
+        <a href="catalogo.php">Catálogo</a>
+        <a href="carrito/carrito.php">Carrito</a>
+
+        <?php if (isset($_SESSION['id_usuario'])): ?>
+            <a href="perfil.php">Mi Perfil (<?= htmlspecialchars($_SESSION['nombre']) ?>)</a>
+        <?php else: ?>
+            <a href="registro.php">Registro / Login</a>
+        <?php endif; ?>
+
+        <a href="contacto.php">Contacto</a>
+    </nav>
+</header>
+
+<section class="section quienes">
+    <h2>¿Quiénes Somos?</h2>
+    <p>En <strong>FaDa Sports</strong> nos dedicamos a ofrecer ropa deportiva de la más alta calidad. 
+       Nuestra misión es brindar comodidad y estilo para que puedas rendir al máximo en tus entrenamientos.</p>
+
+    <div class="info-quienes">
+        <div class="card">
+            <h3>Giro</h3>
+            <p>Nos especializamos en la venta y distribución de ropa deportiva, calzado y accesorios 
+               orientados al rendimiento físico y bienestar personal.</p>
+        </div>
+
+        <div class="card">
+            <h3>Misión</h3>
+            <p>Proveer prendas deportivas cómodas, modernas y accesibles que motiven a nuestros clientes 
+               a alcanzar sus metas deportivas y de bienestar.</p>
+        </div>
+
+        <div class="card">
+            <h3>Visión</h3>
+            <p>Ser la tienda deportiva en línea líder en Latinoamérica, reconocida por su calidad, innovación 
+               y compromiso con el desarrollo de un estilo de vida saludable.</p>
+        </div>
+
+        <div class="card">
+            <h3>Valores</h3>
+            <ul>
+                <li><strong>Compromiso:</strong> con nuestros clientes y su bienestar.</li>
+                <li><strong>Innovación:</strong> en diseño, materiales y tecnología.</li>
+                <li><strong>Calidad:</strong> en cada producto y servicio ofrecido.</li>
+                <li><strong>Trabajo en equipo:</strong> para alcanzar objetivos comunes.</li>
+            </ul>
+        </div>
+
+        <div class="card card-imagen">
+            <img src="img/equipo.jpg" alt="Equipo FaDa Sports">
+        </div>
+
+        <div class="card card-imagen">
+            <img src="img/logo.jpg" alt="Logo FaDa Sports">
+        </div>
+    </div>
+</section>
+
+<footer>
+    <p>&copy; 2025 FaDa Sports. Todos los derechos reservados.</p>
+</footer>
+
+</body>
+</html>

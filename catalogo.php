@@ -1,16 +1,8 @@
 <?php
+session_start();
 require_once 'php/conexion.php';
 
-// Traer todos los productos con su primera variante (solo para mostrar precio ejemplo)
-$sql = "SELECT p.id_producto, p.nombre, p.descripcion, p.material, p.imagen, p.categoria,
-        ANY_VALUE(v.precio) as precio
-        FROM productos p
-        LEFT JOIN variantesProducto v ON p.id_producto = v.id_producto
-        GROUP BY p.id_producto
-        ORDER BY p.categoria, p.nombre";
-
-        
-// Consulta para traer productos con tallas, colores y precio de ejemplo
+// Consulta productos con tallas, colores y precio mínimo
 $sql = "SELECT 
     p.id_producto,
     p.nombre,
@@ -20,14 +12,13 @@ $sql = "SELECT
     p.categoria,
     GROUP_CONCAT(DISTINCT t.nombre_talla ORDER BY t.id_talla SEPARATOR ', ') AS tallas,
     GROUP_CONCAT(DISTINCT c.nombre_color ORDER BY c.id_color SEPARATOR ', ') AS colores,
-    MIN(v.precio)as precio
+    MIN(v.precio) AS precio
     FROM productos p
     LEFT JOIN variantesProducto v ON p.id_producto = v.id_producto
     LEFT JOIN tallas t ON v.id_talla = t.id_talla
     LEFT JOIN colores c ON v.id_color = c.id_color
     GROUP BY p.id_producto
     ORDER BY p.categoria, p.nombre";
-
 
 $result = $conn->query($sql);
 
@@ -43,6 +34,7 @@ if ($result->num_rows > 0) {
 <head>
     <meta charset="UTF-8">
     <title>FaDa Sports - Catálogo</title>
+    <link rel="icon" type="img/logo.jpg" href="img/logo.jpg">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -51,11 +43,17 @@ if ($result->num_rows > 0) {
     <div class="logo">FaDa Sports</div>
     <nav class="menu">
         <a href="index.php">Inicio</a>
-        <a href="quienes.html">Quiénes Somos</a>
-        <a href="catalogo.php">Catálogo</a>
+        <a href="quienes.php">Quiénes Somos</a>
+        <a href="catalogo.php" class="activo">Catálogo</a>
         <a href="carrito/carrito.php">Carrito</a>
-    <a href="registro.php">Registro</a>
-        <a href="contacto.html">Contacto</a>
+
+        <?php if (isset($_SESSION['id_usuario'])): ?>
+            <a href="perfil.php">Mi Perfil (<?= htmlspecialchars($_SESSION['nombre']) ?>)</a>
+        <?php else: ?>
+            <a href="registro.php">Registro / Login</a>
+        <?php endif; ?>
+
+        <a href="contacto.php">Contacto</a>
     </nav>
 </header>
 
@@ -70,13 +68,14 @@ if ($result->num_rows > 0) {
                     <img src="<?= htmlspecialchars($p['imagen']) ?>" alt="<?= htmlspecialchars($p['nombre']) ?>">
                     <h3><?= htmlspecialchars($p['nombre']) ?></h3>
                     <p>$<?= number_format($p['precio'], 2) ?> MXN</p>
+
                     <ul class="detalle-producto">
-                        <!--<li><?= htmlspecialchars($p['descripcion']) ?></li> -->
                         <li><strong>Material:</strong> <?= htmlspecialchars($p['material']) ?></li>
                         <li><strong>Tallas:</strong> <?= htmlspecialchars($p['tallas']) ?></li>
                         <li><strong>Colores:</strong> <?= htmlspecialchars($p['colores']) ?></li>
                     </ul>
-                    <a href="producto/producto.php?id=<?=$p['id_producto']?>" class="btn-producto">Ver Detalles</a>
+
+                    <a href="producto/producto.php?id=<?= $p['id_producto'] ?>" class="btn-producto">Ver Detalles</a>
                 </div>
             <?php endforeach; ?>
         </div>

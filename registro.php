@@ -10,6 +10,7 @@ unset($_SESSION['register_error'], $_SESSION['login_error']);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FaDa Sports - Usuario</title>
+    <link rel="icon" type="img/logo.jpg" href="img/logo.jpg">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -18,7 +19,7 @@ unset($_SESSION['register_error'], $_SESSION['login_error']);
     <div class="logo">FaDa Sports</div>
     <nav class="menu">
         <a href="index.php">Inicio</a>
-        <a href="quienes.html">Quiénes Somos</a>
+        <a href="quienes.php">Quiénes Somos</a>
         <a href="catalogo.php">Catálogo</a>
         <a href="carrito/carrito.php">Carrito</a>
         <a href="registro.php">Registro</a>

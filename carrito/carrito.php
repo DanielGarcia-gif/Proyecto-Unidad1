@@ -10,6 +10,7 @@ $total = 0;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Carrito - FaDa Sports</title>
+    <link rel="icon" type="../img/logo.jpg" href="../img/logo.jpg">
     <link rel="stylesheet" href="carrito.css">
 </head>
 <body>
