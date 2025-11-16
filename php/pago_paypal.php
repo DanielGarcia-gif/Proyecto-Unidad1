@@ -66,7 +66,7 @@ if (isset($response['links'])) {
             header("Location: " . $link['href']);
             exit;
         }
-    }
+    }   
 }
 
 echo "Error al crear el pago en PayPal.";

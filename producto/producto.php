@@ -19,7 +19,7 @@ $producto = $res_producto->fetch_assoc();
 
 // 2. Traer variantes (tallas, colores, precio)
 $sql_variantes = "
-SELECT v.id_variante, v.precio, t.id_talla, t.nombre_talla, c.id_color,c.nombre_color
+SELECT v.id_variante, v.precio, v.stock, t.id_talla, t.nombre_talla, c.id_color, c.nombre_color
 FROM variantesProducto v
 JOIN tallas t ON v.id_talla = t.id_talla
 JOIN colores c ON v.id_color = c.id_color
@@ -68,7 +68,8 @@ $conn->close();
     <div class="producto-info">
         <h2><?= htmlspecialchars($producto['nombre']) ?></h2>
         <p><?= htmlspecialchars($producto['descripcion']) ?></p>
-        <p class="precio">Precio desde: $<?= number_format(min(array_column($variantes, 'precio')), 2) ?> MXN</p>
+        <p id="precio" class="precio">Precio: --</p>
+        <p id="stock" class="stock">Stock: --</p>
 
         <ul class="detalle-producto">
             <li><strong>Material:</strong> <?= htmlspecialchars($producto['material']) ?></li>
@@ -81,7 +82,7 @@ $conn->close();
             <!-- Selección de Talla -->
             <div class="seleccion-talla">
                 <label for="talla">Elige tu talla:</label>
-                <select id="talla" name="talla">
+                <select id="talla" name="talla" onchange="updateVariant()">
                     <?php foreach ($tallas as $id_talla => $nombre_talla): ?>
                         <option value="<?= $id_talla ?>"><?= htmlspecialchars($nombre_talla) ?></option>
                     <?php endforeach; ?>
@@ -90,13 +91,14 @@ $conn->close();
             <!-- Selección de Color -->
             <div class="seleccion-talla">
                 <label for="color">Elige tu color:</label>
-                <select id="color" name="color">
+                <select id="color" name="color" onchange="updateVariant()">
                     <?php foreach ($colores as $id_color => $color): ?>
                         <option value="<?= $id_color ?>"><?= htmlspecialchars($color['nombre']) ?></option>
                     <?php endforeach; ?>
                 </select>
             </div>
-            <button type="submit" class="btn">Agregar al carrito</button>
+            <input type="hidden" name="id_variante" id="id_variante" value="">
+            <button type="submit" id="btnAgregar" class="btn">Agregar al carrito</button>
         </form>
 
     </div>
@@ -106,6 +108,64 @@ $conn->close();
 <footer>
     &copy; 2025 FaDa Sports. Todos los derechos reservados.
 </footer>
+
+<script>
+// Mapa de variantes generado desde PHP
+const variants = <?php echo json_encode(array_values($variantes)); ?>;
+const variantMap = {};
+variants.forEach(v => {
+    const key = v.id_talla + '|' + v.id_color;
+    variantMap[key] = v;
+});
+
+const tallaSel = document.getElementById('talla');
+const colorSel = document.getElementById('color');
+const precioEl = document.getElementById('precio');
+const stockEl = document.getElementById('stock');
+const idVarInput = document.getElementById('id_variante');
+const btnAgregar = document.getElementById('btnAgregar');
+
+function formatMoney(n){
+    return Number(n).toLocaleString('es-MX', {minimumFractionDigits:2, maximumFractionDigits:2});
+}
+
+function updateVariant(){
+    const talla = tallaSel.value;
+    const color = colorSel.value;
+    const key = talla + '|' + color;
+    const v = variantMap[key];
+    if (v) {
+        precioEl.textContent = 'Precio: $' + formatMoney(v.precio) + ' MXN';
+        stockEl.textContent = 'Stock disponible: ' + v.stock;
+        idVarInput.value = v.id_variante;
+        if (parseInt(v.stock) > 0) {
+            btnAgregar.disabled = false;
+            btnAgregar.textContent = 'Agregar al carrito';
+        } else {
+            btnAgregar.disabled = true;
+            btnAgregar.textContent = 'Agotado';
+        }
+    } else {
+        precioEl.textContent = 'Precio: --';
+        stockEl.textContent = 'No disponible para esa combinación';
+        idVarInput.value = '';
+        btnAgregar.disabled = true;
+        btnAgregar.textContent = 'No disponible';
+    }
+}
+
+// Inicializar con la primera variante disponible
+if (variants.length > 0) {
+    const first = variants[0];
+    if (document.querySelector('#talla option[value="' + first.id_talla + '"]')) {
+        tallaSel.value = first.id_talla;
+    }
+    if (document.querySelector('#color option[value="' + first.id_color + '"]')) {
+        colorSel.value = first.id_color;
+    }
+    updateVariant();
+}
+</script>
 
 </body>
 </html>

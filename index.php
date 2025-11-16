@@ -28,7 +28,7 @@
                         $esAdmin = ($_SESSION['rol_nombre'] === 'Admin');
                     } elseif (!empty($_SESSION['id_rol'])) {
                         // fallback por compatibilidad
-                        $esAdmin = ($_SESSION['id_rol'] == 1);
+                        $esAdmin = ($_SESSION['id_rol'] == 2);
                     }
                 ?>
                 <?php if ($esAdmin): ?>

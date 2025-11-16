@@ -15,6 +15,8 @@ $res = $conn->query($sql);
 // Obtener colores y tallas para el formulario
 $colores = $conn->query("SELECT id_color, nombre_color FROM colores ORDER BY nombre_color");
 $tallas = $conn->query("SELECT id_talla, nombre_talla FROM tallas ORDER BY nombre_talla");
+$cats = $conn->query("SELECT categoria FROM productos WHERE categoria IS NOT NULL AND categoria <> '' GROUP BY categoria ORDER BY categoria ASC");
+
 
 ?>
 <!DOCTYPE html>
@@ -41,6 +43,7 @@ $tallas = $conn->query("SELECT id_talla, nombre_talla FROM tallas ORDER BY nombr
         <h2>Gestionar Productos</h2>
 
         <h3>Agregar producto / variante</h3>
+        <div class="form-producto">
         <form action="../php/admin_productos_action.php" method="post">
             <input type="hidden" name="action" value="add">
             <label>Nombre del producto</label>
@@ -50,14 +53,19 @@ $tallas = $conn->query("SELECT id_talla, nombre_talla FROM tallas ORDER BY nombr
             <input type="text" name="descripcion">
 
             <label>Categoría</label>
-            <input type="text" name="categoria">
+            <select name="categoria">
+                <option value="">-- Seleccionar categoría --</option>
+                <?php while ($c = $cats->fetch_assoc()): ?>
+                    <option value="<?php echo htmlspecialchars($c['categoria']); ?>"><?php echo htmlspecialchars($c['categoria']); ?></option>
+                <?php endwhile; ?>
+            </select>
 
             <label>Material</label>
             <input type="text" name="material">
 
             <label>Color</label>
             <select name="id_color">
-                <option value="">--</option>
+                <option value="">--Seleccionar color--</option>
                 <?php while($row = $colores->fetch_assoc()): ?>
                     <option value="<?php echo $row['id_color']; ?>"><?php echo htmlspecialchars($row['nombre_color']); ?></option>
                 <?php endwhile; ?>
@@ -65,7 +73,7 @@ $tallas = $conn->query("SELECT id_talla, nombre_talla FROM tallas ORDER BY nombr
 
             <label>Talla</label>
             <select name="id_talla">
-                <option value="">--</option>
+                <option value="">--Seleccionar talla--</option>
                 <?php while($row = $tallas->fetch_assoc()): ?>
                     <option value="<?php echo $row['id_talla']; ?>"><?php echo htmlspecialchars($row['nombre_talla']); ?></option>
                 <?php endwhile; ?>
@@ -79,6 +87,7 @@ $tallas = $conn->query("SELECT id_talla, nombre_talla FROM tallas ORDER BY nombr
 
             <button type="submit">Agregar</button>
         </form>
+        </div>
 
         <h3>Variantes existentes</h3>
         <table>
