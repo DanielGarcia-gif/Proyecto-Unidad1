@@ -16,15 +16,34 @@ $stmt->bind_param("i", $id_usuario);
 $stmt->execute();
 $result_user = $stmt->get_result()->fetch_assoc();
 
-/* ==== 2. Obtener historial de compras ==== */
+/* ==== 2. Obtener historial de compras (CORREGIDO) ==== */
 $sql_compras = "
-    SELECT c.id_compra, c.fecha_compra, c.total_compra, c.estado,
-           p.nombre AS producto
+    SELECT
+        c.id_compra,
+        c.fecha_compra,
+        c.total_compra,
+        c.estado,
+
+        GROUP_CONCAT(
+            CONCAT(
+                p.nombre,
+                ' - ', col.nombre_color,
+                ' - ', t.nombre_talla,
+                ' (x', d.cantidad, ') — $', d.subtotal
+            )
+            SEPARATOR '<br>'
+        ) AS productos
+
     FROM compras c
     JOIN detalleCompra d ON c.id_compra = d.id_compra
     JOIN variantesProducto vp ON d.id_variante = vp.id_variante
     JOIN productos p ON vp.id_producto = p.id_producto
+    JOIN colores col ON vp.id_color = col.id_color
+    JOIN tallas t ON vp.id_talla = t.id_talla
+
     WHERE c.id_usuario = ?
+
+    GROUP BY c.id_compra
     ORDER BY c.fecha_compra DESC
 ";
 $stmt2 = $conn->prepare($sql_compras);
@@ -69,7 +88,7 @@ $direcciones = $stmt3->get_result();
 <div class="perfil-card">
     <h2>Datos del Usuario</h2>
 
-    <form action="update_usuario.php" method="POST">
+    <form action="update_usuario.php" method="POST" class="perfil-form">
         <p><strong>Nombre:</strong> <?= $result_user['nombre'] ?></p>
 
         <label>Email:</label>
@@ -90,8 +109,7 @@ $direcciones = $stmt3->get_result();
         <table class="tabla-compras">
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Producto</th>
+                    <th>Productos</th>
                     <th>Fecha</th>
                     <th>Monto</th>
                     <th>Estado</th>
@@ -101,8 +119,7 @@ $direcciones = $stmt3->get_result();
             <tbody>
                 <?php while ($row = $compras->fetch_assoc()) { ?>
                 <tr>
-                    <td><?= $row['id_compra'] ?></td>
-                    <td><?= $row['producto'] ?></td>
+                    <td><?= $row['productos'] ?></td>
                     <td><?= $row['fecha_compra'] ?></td>
                     <td>$<?= $row['total_compra'] ?></td>
                     <td><?= $row['estado'] ?></td>
@@ -139,7 +156,6 @@ $direcciones = $stmt3->get_result();
         </li>
     <?php } ?>
 </ul>
-
 
     <button class="btn" onclick="document.getElementById('form-dir').style.display='block'">
         Agregar Nueva Dirección

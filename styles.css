@@ -1654,3 +1654,113 @@ footer {
 .btn-eliminar:hover {
     background-color: #b0212e;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* === Estilo para el formulario del perfil === */
+.perfil-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 15px;
+}
+
+.perfil-form label {
+    font-weight: bold;
+    color: #444;
+    margin-bottom: 3px;
+    display: block;
+}
+
+.perfil-form input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+    background: #fdfdfd;
+    transition: .2s ease-in-out;
+}
+
+/* Hover */
+.perfil-form input:hover {
+    border-color: #4e73df;
+}
+
+/* Focus */
+.perfil-form input:focus {
+    border-color: #4e73df;
+    box-shadow: 0 0 6px rgba(78, 115, 223, 0.4);
+    outline: none;
+}
+
