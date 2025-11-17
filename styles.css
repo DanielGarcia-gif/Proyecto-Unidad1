@@ -1727,40 +1727,42 @@ footer {
 
 
 
-/* === Estilo para el formulario del perfil === */
-.perfil-form {
+/* Contenedor horizontal para cada fila */
+.perfil-form .field-row {
     display: flex;
-    flex-direction: column;
+    align-items: center;
     gap: 12px;
-    margin-top: 15px;
 }
 
-.perfil-form label {
+/* Label alineado a la izquierda */
+.perfil-form .field-row label {
+    width: 120px;                   /* Ajusta si quieres más ancho */
     font-weight: bold;
     color: #444;
-    margin-bottom: 3px;
-    display: block;
+    display: inline-block;
+    margin: 0;
 }
 
-.perfil-form input {
-    width: 100%;
+/* Input ocupando el resto del espacio */
+.perfil-form .field-row input {
+    flex: 1;
     padding: 10px 12px;
     border: 1px solid #ccc;
     border-radius: 8px;
     font-size: 14px;
     background: #fdfdfd;
     transition: .2s ease-in-out;
+    margin-bottom: 15px;
 }
 
 /* Hover */
-.perfil-form input:hover {
+.perfil-form .field-row input:hover {
     border-color: #4e73df;
 }
 
 /* Focus */
-.perfil-form input:focus {
+.perfil-form .field-row input:focus {
     border-color: #4e73df;
     box-shadow: 0 0 6px rgba(78, 115, 223, 0.4);
     outline: none;
 }
-

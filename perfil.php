@@ -72,10 +72,10 @@ $direcciones = $stmt3->get_result();
 <header>
     <div class="logo">FaDa Sports</div>
     <nav class="menu">
-        <a href="index.php">Inicio</a>
-        <a href="catalogo.php">Catálogo</a>
-        <a href="perfil.php">Mi Perfil</a>
-        <a href="contacto.php">Contacto</a>
+        <a style="padding-top: 10px" href="index.php">Inicio</a>
+        <a style="padding-top: 10px" href="catalogo.php">Catálogo</a>
+        <a style="padding-top: 10px" href="perfil.php">Mi Perfil</a>
+        <a style="padding-top: 10px" href="contacto.php">Contacto</a>
         <a href="php/logout.php" class="cerrar-sesion">Cerrar Sesión</a>
     </nav>
 </header>
@@ -89,17 +89,24 @@ $direcciones = $stmt3->get_result();
     <h2>Datos del Usuario</h2>
 
     <form action="update_usuario.php" method="POST" class="perfil-form">
+
         <p><strong>Nombre:</strong> <?= $result_user['nombre'] ?></p>
 
-        <label>Email:</label>
-        <input type="email" name="email" value="<?= $result_user['email'] ?>" required>
+        <div class="field-row">
+            <label>Email:</label>
+            <input type="email" name="email" value="<?= $result_user['email'] ?>" required>
+        </div>
 
-        <label>Teléfono:</label>
-        <input type="text" name="telefono" value="<?= $result_user['telefono'] ?>">
+        <div class="field-row">
+            <label>Teléfono:</label>
+            <input type="text" name="telefono" value="<?= $result_user['telefono'] ?>">
+        </div>
 
         <button class="btn">Actualizar Información</button>
+
     </form>
 </div>
+
 
 <!-- HISTORIAL DE COMPRAS -->
 <div class="perfil-card">
