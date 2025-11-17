@@ -1,5 +1,5 @@
 <?php
-require_once "config/conexion.php";
+require_once "php/conexion.php";
 
 $id_compra = $_GET['id'];
 
