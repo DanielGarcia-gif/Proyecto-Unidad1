@@ -40,9 +40,60 @@ function requireLogin() {
 function requireAdmin() {
     if (!isAdmin()) {
         header('HTTP/1.1 403 Forbidden');
-        echo 'Acceso denegado';
+        ?>
+        <!DOCTYPE html>
+        <html lang="es">
+        <head>
+            <meta charset="UTF-8">
+            <title>Acceso Denegado</title>
+            <style>
+                body {
+                    height: 100vh;
+                    margin: 0;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    background: #f0f2f5;
+                    font-family: Arial, sans-serif;
+                }
+                .denied-box {
+                    text-align: center;
+                    padding: 40px;
+                    background: #ffffff;
+                    border-radius: 15px;
+                    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+                    max-width: 500px;
+                }
+                .denied-box img {
+                    width: 180px;
+                    margin-bottom: 20px;
+                }
+                .denied-box h1 {
+                    font-size: 32px;
+                    color: #d9534f;
+                    margin-bottom: 15px;
+                }
+                .denied-box p {
+                    font-size: 18px;
+                    color: #555;
+                }
+            </style>
+        </head>
+        <body>
+
+        <div class="denied-box">
+            <!-- Pon aquí la ruta de tu imagen -->
+            <img src="../img/zona-prohibida.png" alt="Acceso denegado">
+            <h1>Acceso Denegado</h1>
+            <p>No tienes permisos para ver esta página.</p>
+        </div>
+
+        </body>
+        </html>
+        <?php
         exit;
     }
 }
+
 
 ?>

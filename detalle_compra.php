@@ -70,9 +70,9 @@ $conn->close();
 <header>
     <div class="logo">FaDa Sports</div>
     <nav class="menu">
+        <a href="index.php">Inicio</a>
         <a href="catalogo.php">Catálogo</a>
         <a href="../carrito/carrito.php">Carrito</a>
-        <a href="index.php">Inicio</a>
     </nav>
 </header>
 
