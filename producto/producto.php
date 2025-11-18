@@ -70,6 +70,7 @@ $conn->close();
         <p><?= htmlspecialchars($producto['descripcion']) ?></p>
         <p id="precio" class="precio">Precio: --</p>
         <p id="stock" class="stock">Stock: --</p>
+        <p id="otras" class="otras-disponibilidades" style="display:none"></p>
 
         <ul class="detalle-producto">
             <li><strong>Material:</strong> <?= htmlspecialchars($producto['material']) ?></li>
@@ -134,16 +135,42 @@ function updateVariant(){
     const color = colorSel.value;
     const key = talla + '|' + color;
     const v = variantMap[key];
+    const otrasEl = document.getElementById('otras');
     if (v) {
         precioEl.textContent = 'Precio: $' + formatMoney(v.precio) + ' MXN';
         stockEl.textContent = 'Stock disponible: ' + v.stock;
         idVarInput.value = v.id_variante;
+        otrasEl.style.display = 'none';
+        stockEl.classList.remove('agotado');
         if (parseInt(v.stock) > 0) {
             btnAgregar.disabled = false;
             btnAgregar.textContent = 'Agregar al carrito';
         } else {
+            // Agotado: buscar disponibilidad en otras tallas/colores
             btnAgregar.disabled = true;
             btnAgregar.textContent = 'Agotado';
+            stockEl.classList.add('agotado');
+
+            const otrasColores = new Set();
+            const otrasTallas = new Set();
+            variants.forEach(x => {
+                if (x.id_variante == v.id_variante) return;
+                if (parseInt(x.stock) > 0) {
+                    if (x.id_talla == v.id_talla && x.id_color != v.id_color) otrasColores.add(x.nombre_color);
+                    if (x.id_color == v.id_color && x.id_talla != v.id_talla) otrasTallas.add(x.nombre_talla);
+                }
+            });
+
+            let mensajes = [];
+            if (otrasColores.size > 0) mensajes.push('También disponible en otros colores: ' + Array.from(otrasColores).join(', ') + '.');
+            if (otrasTallas.size > 0) mensajes.push('<br>También disponible en otras tallas: ' + Array.from(otrasTallas).join(', ') + '.');
+            if (mensajes.length > 0) {
+                otrasEl.innerHTML = mensajes.join(' ');
+                otrasEl.style.display = 'block';
+            } else {
+                otrasEl.innerHTML = 'No hay disponibilidad en otras tallas o colores.';
+                otrasEl.style.display = 'block';
+            }
         }
     } else {
         precioEl.textContent = 'Precio: --';
@@ -151,6 +178,8 @@ function updateVariant(){
         idVarInput.value = '';
         btnAgregar.disabled = true;
         btnAgregar.textContent = 'No disponible';
+        otrasEl.style.display = 'none';
+        stockEl.classList.remove('agotado');
     }
 }
 

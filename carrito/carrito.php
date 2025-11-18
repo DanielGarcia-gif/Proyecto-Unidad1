@@ -57,20 +57,25 @@ $total = 0;
                 <?php $subtotal = $item['precio'] * $item['cantidad']; ?>
                 <?php $total += $subtotal; ?>
 
-                <div class="producto-carrito">
+                <div class="producto-carrito" data-id-variante="<?= $item['id_variante'] ?>" data-precio="<?= $item['precio'] ?>" data-stock="<?= $item['stock'] ?>">
                     <img src="../<?= htmlspecialchars($item['imagen']) ?>" alt="<?= htmlspecialchars($item['nombre']) ?>">
                     <div class="info-producto">
                         <h3><?= htmlspecialchars($item['nombre']) ?></h3>
                         <p class="precio">$<?= number_format($item['precio'], 2) ?> MXN</p>
                         <p><strong>Talla:</strong> <?= htmlspecialchars($item['talla']) ?></p>
                         <p><strong>Color:</strong> <?= htmlspecialchars($item['color']) ?></p>
-                        <!-- Actualizar cantidad -->
-                        <form action="../php/actualizar_carrito.php" method="POST" class="cantidad">
-                            <input type="hidden" name="id_variante" value="<?= $item['id_variante'] ?>">
-                            <label for="cantidad"><strong>Cantidad:</strong></label>
-                            <input type="number" name="cantidad" value="<?= $item['cantidad'] ?>" min="1" max="<?= $item['stock'] ?>">
-                            <button type="submit" class="btn-actualizar">Actualizar</button>
-                        </form>
+                        <p class="stock-disponible">Stock disponible: <span class="stock-valor"><?= $item['stock'] ?></span></p>
+
+                        <!-- Cantidad: formulario que se enviará automáticamente al cambiar el valor -->
+                        <div class="cantidad">
+                            <form action="../php/actualizar_carrito.php" method="POST" class="form-cantidad">
+                                <input type="hidden" name="id_variante" value="<?= $item['id_variante'] ?>">
+                                <label for="cantidad-<?= $item['id_variante'] ?>"><strong>Cantidad:</strong></label>
+                                <input type="number" class="input-cantidad" id="cantidad-<?= $item['id_variante'] ?>" name="cantidad" value="<?= $item['cantidad'] ?>" min="1" max="<?= $item['stock'] ?>">
+                                <button type="submit" style="display:none">Actualizar</button>
+                            </form>
+                        </div>
+                        <!-- subtotal removed: calculation handled server-side after submit -->
                     </div>
                     <form action="../php/eliminar_carrito.php" method="POST">
                         <input type="hidden" name="id_variante" value="<?= $item['id_variante'] ?>">
@@ -94,6 +99,50 @@ $total = 0;
 <footer>
     <p>© 2025 FaDa Sports. Todos los derechos reservados.</p>
 </footer>
+
+<script>
+// Actualizar totales cuando cambie alguna cantidad
+function formatMoney(n){
+    return Number(n).toLocaleString('es-MX', {minimumFractionDigits:2, maximumFractionDigits:2});
+}
+
+function recalcularTotal(){
+    let total = 0;
+    document.querySelectorAll('.producto-carrito').forEach(function(card){
+        const precio = parseFloat(card.dataset.precio);
+        const cantidad = parseInt(card.querySelector('.input-cantidad').value) || 0;
+        const subtotal = precio * cantidad;
+        total += subtotal;
+    });
+    document.querySelector('.carrito-total h2 span').textContent = '$' + formatMoney(total) + ' MXN';
+}
+
+document.querySelectorAll('.input-cantidad').forEach(function(input){
+    // almacenar valor previo
+    input.dataset.prev = input.value;
+    input.addEventListener('change', function(e){
+        const card = input.closest('.producto-carrito');
+        const max = parseInt(card.dataset.stock) || 0;
+        let val = parseInt(input.value) || 0;
+        if (val < 1) val = 1;
+        if (val > max) {
+            alert('La cantidad supera el stock disponible.');
+            input.value = input.dataset.prev;
+            return;
+        }
+        // actualizar prev
+        input.dataset.prev = val;
+        // recalcular localmente
+        recalcularTotal();
+        // enviar el formulario que envía a actualizar_carrito.php (sin AJAX)
+        const form = input.closest('form.form-cantidad');
+        if (form) form.submit();
+    });
+});
+
+// Inicializar total/formato
+recalcularTotal();
+</script>
 
 </body>
 </html>
