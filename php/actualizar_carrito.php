@@ -3,7 +3,7 @@ session_start();
 include 'conexion.php';
 
 if (!isset($_POST['id_variante']) || !isset($_POST['cantidad'])) {
-    header("Location: ../paginas/carrito.php");
+    header("Location: ../carrito/carrito.php");
     exit;
 }
 

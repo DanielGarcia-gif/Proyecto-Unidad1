@@ -222,6 +222,26 @@ header .menu a:hover::after {
     margin: 10px 0;
 }
 
+.stock {
+    font-size: 1.05rem;
+    margin: 6px 0 12px;
+    color: #333;
+}
+
+.stock.agotado {
+    color: #d32f2f; /* rojo fuerte para agotado */
+    font-weight: 700;
+}
+
+.otras-disponibilidades {
+    font-size: 0.95rem;
+    color: #555;
+    margin-top: 6px;
+}
+.otras-disponibilidades strong {
+    color: #0d6efd;
+}
+
 
 /* Footer */
 footer {
