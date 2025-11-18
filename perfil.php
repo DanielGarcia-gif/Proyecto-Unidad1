@@ -262,8 +262,32 @@ $tarjetas = $stmt4->get_result();
 
             <div id="mensajeTarjeta" style="margin-top:3px; font-size:14px;"></div>
 
-            <input id="numero_tarjeta" type="text" name="numero_tarjeta" placeholder="Número de tarjeta" 
-                   required maxlength="19">
+            <div style="position: relative; display: inline-block; width: 100%;">
+                <input 
+                    type="text" 
+                    id="numero_tarjeta" 
+                    name="numero_tarjeta" 
+                    maxlength="19" 
+                    placeholder="Número de tarjeta"
+                    style="padding-right: 45px;"
+                >
+
+                <!-- Icono dentro del input -->
+                <img 
+                    id="icono-tarjeta" 
+                    src="" 
+                    alt=""
+                    style="
+                        position: absolute;
+                        right: 10px;
+                        top: 50%;
+                        transform: translateY(-50%);
+                        height: 28px;
+                        display: none;
+                    "
+                >
+            </div>
+
 
             <div style="display:flex; gap:10px;">
                 <input type="text" id="expiracion" name="expiracion" placeholder="MM/AA" maxlength="5">

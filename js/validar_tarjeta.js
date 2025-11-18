@@ -1,29 +1,35 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-    // ===========================================================
-    //  1. FORMATO AUTOMÁTICO EN GRUPOS DE 4
-    // ===========================================================
     const inputTarjeta = document.getElementById("numero_tarjeta");
     const msgTarjeta = document.getElementById("mensajeTarjeta");
     const form = document.getElementById("formAgregarTarjeta");
+    const icono = document.getElementById("icono-tarjeta");
 
-    // Tarjetas existentes (últimos 4 dígitos)
     const tarjetasRegistradas = window.tarjetasRegistradas || [];
 
     function formatearTarjeta(valor) {
         return valor.replace(/\D/g, "").replace(/(.{4})/g, "$1 ").trim();
     }
 
-
     // ===========================================================
-    //  2. VALIDACIÓN DE TARJETA (Bancos + Luhn)
+    //  MARCAS DE TARJETA (patrones)
     // ===========================================================
     const bancosValidos = {
-        visa: /^4\d{15}$/,
-        mastercard: /^5[1-5]\d{14}$/,
-        amex: /^3[47]\d{13}$/
+        visa: /^4\d{12}(\d{3})?$/,             // 13 o 16 dígitos
+        mastercard: /^5[1-5]\d{14}$/,          // 16 dígitos
+        amex: /^3[47]\d{13}$/                  // 15 dígitos
     };
 
+    function detectarMarca(num) {
+        if (bancosValidos.visa.test(num)) return "visa";
+        if (bancosValidos.mastercard.test(num)) return "mastercard";
+        if (bancosValidos.amex.test(num)) return "amex";
+        return "";
+    }
+
+    // ===========================================================
+    //  ALGORITMO DE LUHN
+    // ===========================================================
     function luhnCheck(num) {
         let arr = num.split("").reverse().map(n => parseInt(n));
         let sum = 0;
@@ -41,28 +47,27 @@ document.addEventListener("DOMContentLoaded", () => {
         return sum % 10 === 0;
     }
 
+    // ===========================================================
+    //  VALIDACIÓN DE TARJETA COMPLETA
+    // ===========================================================
     function validarNumeroTarjeta(num) {
         num = num.replace(/\s/g, "");
 
         if (!/^\d*$/.test(num)) return "❌ Solo números permitidos";
-        if (num.length < 15) return `❌ Faltan dígitos (${num.length}/16)`;
+
+        if (num.length < 13) return `❌ Faltan dígitos (${num.length}/16)`;
         if (num.length > 16) return "❌ Demasiados dígitos";
 
-        const esVisa = bancosValidos.visa.test(num);
-        const esMaster = bancosValidos.mastercard.test(num);
-        const esAmex = bancosValidos.amex.test(num);
+        const marca = detectarMarca(num);
+        if (!marca) return "❌ Prefijo no válido (Visa, Mastercard o AMEX)";
 
-        if (!esVisa && !esMaster && !esAmex)
-            return "❌ Prefijo no pertenece a Visa, Mastercard o AMEX";
-
-        if (!luhnCheck(num)) return "❌ Tarjeta inválida (falló Luhn)";
+        if (!luhnCheck(num)) return "❌ Tarjeta inválida (Luhn)";
 
         return "";
     }
 
-
     // ===========================================================
-    //  3. VALIDACIÓN DE FECHA MM/AA
+    //  VALIDACIÓN DE FECHA MM/AA
     // ===========================================================
     const inputExp = document.getElementById("expiracion");
     const msgExp = document.getElementById("error-exp");
@@ -76,90 +81,83 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (mes < 1 || mes > 12) return "❌ Mes inválido (01-12)";
 
-        const anioActualCompleto = new Date().getFullYear();
-        const base = Math.floor(anioActualCompleto / 100) * 100;
+        const actual = new Date();
+        const base = Math.floor(actual.getFullYear() / 100) * 100;
         anio += base;
 
-        const ahora = new Date();
-        const mesActual = ahora.getMonth() + 1;
-        const anioActual = ahora.getFullYear();
-
-        if (anio < anioActual) return "❌ Tarjeta vencida";
-        if (anio === anioActual && mes < mesActual) return "❌ Tarjeta vencida";
+        if (anio < actual.getFullYear() ||
+            (anio === actual.getFullYear() && mes < actual.getMonth() + 1)) {
+            return "❌ Tarjeta vencida";
+        }
 
         return "";
     }
 
-
     // ===========================================================
-    //  4. DETECTAR TARJETA REPETIDA (Ultimate 4 digits)
+    //  DETECTAR DUPLICADOS
     // ===========================================================
     function tarjetaYaExiste(num) {
         num = num.replace(/\s/g, "");
         const ultimos4 = num.slice(-4);
-
         return tarjetasRegistradas.includes(ultimos4);
     }
 
+    // ===========================================================
+    //  EVENTOS INPUT
+    // ===========================================================
+    inputTarjeta.addEventListener("input", () => {
+
+        inputTarjeta.value = formatearTarjeta(inputTarjeta.value);
+        const soloNum = inputTarjeta.value.replace(/\s/g, "");
+
+        // Detectar marca y mostrar icono
+        const marca = detectarMarca(soloNum);
+        if (marca) {
+            icono.src = `img/${marca}.png`;  
+            icono.style.display = "block";
+        } else {
+            icono.style.display = "none";
+        }
+
+        let error = validarNumeroTarjeta(soloNum);
+
+        if (!error && soloNum.length >= 13 && tarjetaYaExiste(soloNum)) {
+            error = "❌ Esta tarjeta ya está registrada";
+        }
+
+        msgTarjeta.textContent = error;
+        msgTarjeta.style.color = error ? "red" : "green";
+    });
+
+    inputExp.addEventListener("input", () => {
+        if (inputExp.value.length === 2 && !inputExp.value.includes("/")) {
+            inputExp.value += "/";
+        }
+        const error = validarFechaVencimiento(inputExp.value);
+        msgExp.textContent = error;
+        msgExp.style.color = error ? "red" : "green";
+    });
 
     // ===========================================================
-    //  5. EVENTOS DE INPUT
+    //  VALIDACIÓN FINAL DEL FORM
     // ===========================================================
-    if (inputTarjeta && msgTarjeta) {
-        inputTarjeta.addEventListener("input", () => {
+    form.addEventListener("submit", (e) => {
+        const tarjeta = inputTarjeta.value.replace(/\s/g, "");
+        const fecha = inputExp.value;
 
-            // Formatear automáticamente
-            inputTarjeta.value = formatearTarjeta(inputTarjeta.value);
+        const errorNum = validarNumeroTarjeta(tarjeta);
+        const errorFecha = validarFechaVencimiento(fecha);
+        const duplicada = tarjetaYaExiste(tarjeta);
 
-            // Validación
-            const soloNum = inputTarjeta.value.replace(/\s/g, "");
-            let error = validarNumeroTarjeta(soloNum);
-
-            // Verificación de duplicados
-            if (!error && soloNum.length >= 15 && tarjetaYaExiste(soloNum)) {
-                error = "❌ Esta tarjeta ya está registrada";
-            }
-
-            msgTarjeta.textContent = error;
-            msgTarjeta.style.color = error ? "red" : "green";
-        });
-    }
-
-
-    if (inputExp && msgExp) {
-        inputExp.addEventListener("input", () => {
-            if (inputExp.value.length === 2 && !inputExp.value.includes("/")) {
-                inputExp.value += "/";
-            }
-            const error = validarFechaVencimiento(inputExp.value);
-            msgExp.textContent = error;
-            msgExp.style.color = error ? "red" : "green";
-        });
-    }
-
-
-    // ===========================================================
-    //  6. VALIDACIÓN FINAL ANTES DE ENVIAR
-    // ===========================================================
-    if (form) {
-        form.addEventListener("submit", (e) => {
-            const tarjeta = inputTarjeta.value.replace(/\s/g, "");
-            const fecha = inputExp.value;
-
-            const errorNum = validarNumeroTarjeta(tarjeta);
-            const errorFecha = validarFechaVencimiento(fecha);
-            const duplicada = tarjetaYaExiste(tarjeta);
-
-            if (errorNum || errorFecha || duplicada) {
-                e.preventDefault();
-                alert(
-                    "Corrige los errores antes de guardar:\n" +
-                    (errorNum ? errorNum + "\n" : "") +
-                    (duplicada ? "❌ Esta tarjeta ya existe\n" : "") +
-                    (errorFecha ? errorFecha : "")
-                );
-            }
-        });
-    }
+        if (errorNum || errorFecha || duplicada) {
+            e.preventDefault();
+            alert(
+                "Corrige los errores:\n" +
+                (errorNum ? errorNum + "\n" : "") +
+                (duplicada ? "❌ Esta tarjeta ya existe\n" : "") +
+                (errorFecha ? errorFecha : "")
+            );
+        }
+    });
 
 });
