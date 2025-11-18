@@ -82,7 +82,6 @@ function requireAdmin() {
         <body>
 
         <div class="denied-box">
-            <!-- Pon aquí la ruta de tu imagen -->
             <img src="../img/zona-prohibida.png" alt="Acceso denegado">
             <h1>Acceso Denegado</h1>
             <p>No tienes permisos para ver esta página.</p>
