@@ -134,7 +134,7 @@ $conn->close();
                 <input type="text" name="codigo_postal" required>
             <?php endif; ?>
 
-            <!-- ✔ CAMPOS OCULTOS PARA ENVIAR EL CARRITO COMPLETO -->
+            <!--  CAMPOS OCULTOS PARA ENVIAR EL CARRITO COMPLETO -->
             <?php foreach($detalleCarrito as $item): ?>
                 <input type="hidden" name="id_variante[]" value="<?= $item['id_variante'] ?>">
                 <input type="hidden" name="cantidad[]" value="<?= $item['cantidad'] ?>">
