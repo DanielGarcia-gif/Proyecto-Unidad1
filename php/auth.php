@@ -45,6 +45,7 @@ function requireAdmin() {
         <html lang="es">
         <head>
             <meta charset="UTF-8">
+            <link rel="stylesheet" href="styles.css">
             <title>Acceso Denegado</title>
             <style>
                 body {
