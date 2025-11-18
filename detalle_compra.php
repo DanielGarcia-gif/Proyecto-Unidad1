@@ -122,7 +122,8 @@ $conn->close();
                 </select>
 
             <?php else: ?>
-                <p style="color:red;">No tienes direcciones guardadas. Agrega una en tu Perfil.</p>
+                <p style="color:red;">No tienes direcciones guardadas. Agrega una a continuacion.</p>
+                <p style="color:red;">Puedes agregar direcciones de envio en tu perfil.</p>
 
                 <label>Dirección:</label>
                 <input type="text" name="direccion" required>
