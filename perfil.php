@@ -74,8 +74,8 @@ $direcciones = $stmt3->get_result();
     <nav class="menu">
         <a style="padding-top: 10px" href="index.php">Inicio</a>
         <a style="padding-top: 10px" href="catalogo.php">Catálogo</a>
-        <a style="padding-top: 10px" href="perfil.php">Mi Perfil</a>
-        <a style="padding-top: 10px" href="contacto.php">Contacto</a>
+        <a style="padding-top: 10px" href="carrito/carrito.php">Mi Carrito</a>
+        <a style="padding-top: 10px" href="contacto.html">Contacto</a>
         <a href="php/logout.php" class="cerrar-sesion">Cerrar Sesión</a>
     </nav>
 </header>
@@ -149,11 +149,16 @@ $direcciones = $stmt3->get_result();
 
     <ul class="lista-direcciones">
     <?php while ($d = $direcciones->fetch_assoc()) { ?>
-        <li class="direccion-item">
+        <li class="direccion-item"
+            data-direccion="<?= strtolower(trim($d['direccion'])) ?>"
+            data-ciudad="<?= strtolower(trim($d['ciudad'])) ?>"
+            data-cp="<?= strtolower(trim($d['codigo_postal'])) ?>">
+            
             <span>
                 <strong><?= $d['ciudad'] ?>:</strong>
                 <?= $d['direccion'] ?>, CP <?= $d['codigo_postal'] ?>
             </span>
+
 
             <a href="eliminar_direccion.php?id=<?= $d['id_direccion'] ?>"
                class="btn-eliminar"
@@ -168,8 +173,19 @@ $direcciones = $stmt3->get_result();
         Agregar Nueva Dirección
     </button>
 
+    <div id="mensajeDireccion" 
+        style="display:none; 
+                background:#ffdddd; 
+                color:#a40000; 
+                padding:10px; 
+                border-left:4px solid #d00000; 
+                margin-bottom:10px; 
+                border-radius:5px;
+                margin-top:15px;">
+    </div>
+
     <div id="form-dir" style="display:none; margin-top:15px;">
-        <form action="agregar_direccion.php" method="POST">
+        <form class="resumen-final" id="formAgregarDireccion" action="agregar_direccion.php" method="POST">
             <input type="text" name="direccion" placeholder="Dirección completa" required>
             <input type="text" name="ciudad" placeholder="Ciudad" required>
             <input type="text" name="codigo_postal" placeholder="Código Postal" required>
@@ -184,5 +200,6 @@ $direcciones = $stmt3->get_result();
     <p>&copy; 2025 FaDa Sports. Todos los derechos reservados.</p>
 </footer>
 
+<script src="js/validar_direccion.js"></script>
 </body>
 </html>

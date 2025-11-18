@@ -26,9 +26,9 @@ requireAdmin();
         <p>Bienvenido, <?php echo htmlspecialchars($_SESSION['nombre'] ?? 'Administrador'); ?>.</p>
 
         <div class="admin-cards">
-            <a class="card" href="productos.php">Gestionar Productos</a>
-            <a class="card" href="#">Gestionar Usuarios</a>
-            <a class="card" href="#">Ver Pedidos</a>
+            <a class="dash-card" href="productos.php">Gestionar Productos</a>
+            <a class="dash-card" href="#">Gestionar Usuarios</a>
+            <a class="dash-card" href="#">Ver Pedidos</a>
         </div>
     </section>
 

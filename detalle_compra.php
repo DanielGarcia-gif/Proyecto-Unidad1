@@ -70,9 +70,9 @@ $conn->close();
 <header>
     <div class="logo">FaDa Sports</div>
     <nav class="menu">
+        <a href="index.php">Inicio</a>
         <a href="catalogo.php">Catálogo</a>
         <a href="../carrito/carrito.php">Carrito</a>
-        <a href="index.php">Inicio</a>
     </nav>
 </header>
 
@@ -122,7 +122,8 @@ $conn->close();
                 </select>
 
             <?php else: ?>
-                <p style="color:red;">No tienes direcciones guardadas. Agrega una en tu Perfil.</p>
+                <p style="color:red;">No tienes direcciones guardadas. Agrega una a continuacion.</p>
+                <p style="color:red;">Puedes agregar direcciones de envio en tu perfil.</p>
 
                 <label>Dirección:</label>
                 <input type="text" name="direccion" required>
@@ -134,7 +135,7 @@ $conn->close();
                 <input type="text" name="codigo_postal" required>
             <?php endif; ?>
 
-            <!-- ✔ CAMPOS OCULTOS PARA ENVIAR EL CARRITO COMPLETO -->
+            <!--  CAMPOS OCULTOS PARA ENVIAR EL CARRITO COMPLETO -->
             <?php foreach($detalleCarrito as $item): ?>
                 <input type="hidden" name="id_variante[]" value="<?= $item['id_variante'] ?>">
                 <input type="hidden" name="cantidad[]" value="<?= $item['cantidad'] ?>">

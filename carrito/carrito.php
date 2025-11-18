@@ -20,6 +20,28 @@ $total = 0;
     <nav class="menu">
         <a href="../index.php">Inicio</a>
         <a href="../catalogo.php">Catálogo</a>
+        <?php if (!empty($_SESSION['id_usuario'])): ?>
+
+            <a href="../perfil.php">Mi Perfil (<?php echo htmlspecialchars($_SESSION['nombre']); ?>)</a>
+
+            <?php
+                // Mostrar enlace Admin solo si el rol en sesión es Admin
+                $esAdmin = false;
+                if (!empty($_SESSION['rol_nombre'])) {
+                    $esAdmin = ($_SESSION['rol_nombre'] === 'Admin');
+                } elseif (!empty($_SESSION['id_rol'])) {
+                    $esAdmin = ($_SESSION['id_rol'] == 2);
+                }
+            ?>
+
+            <?php if ($esAdmin): ?>
+                <a href="admin/dashboard.php">Admin</a>
+            <?php endif; ?>
+
+        <?php else: ?>
+            <a href="registro.php">Registro / Login</a>
+        <?php endif; ?>
+
         <a href="../contacto.html">Contacto</a>
     </nav>
 </header>
