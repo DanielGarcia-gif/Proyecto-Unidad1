@@ -57,6 +57,15 @@ $stmt3 = $conn->prepare($sql_dir);
 $stmt3->bind_param("i", $id_usuario);
 $stmt3->execute();
 $direcciones = $stmt3->get_result();
+
+/* ==== 4. Obtener tarjetas del usuario ==== */
+$sql_tarjetas = "SELECT id_tarjeta, titular, numero_tarjeta, mes_expiracion, anio_expiracion, es_predeterminada 
+                 FROM tarjetasUsuario 
+                 WHERE id_usuario = ?";
+$stmt4 = $conn->prepare($sql_tarjetas);
+$stmt4->bind_param("i", $id_usuario);
+$stmt4->execute();
+$tarjetas = $stmt4->get_result();
 ?>
 
 <!DOCTYPE html>
@@ -194,6 +203,79 @@ $direcciones = $stmt3->get_result();
     </div>
 </div>
 
+<!-- TARJETAS GUARDADAS -->
+<div class="perfil-card">
+    <h2>Métodos de Pago (Tarjetas)</h2>
+
+    <div class="tabla-container">
+        <table class="tabla-compras">
+            <thead>
+                <tr>
+                    <th>Titular</th>
+                    <th>Número</th>
+                    <th>Expiración</th>
+                    <th>Predeterminada</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            <?php while ($t = $tarjetas->fetch_assoc()) { ?>
+                <tr>
+                    <td><?= $t['titular'] ?></td>
+                    <td><?= $t['numero_tarjeta'] ?></td>
+                    <td><?= $t['mes_expiracion'] ?>/<?= $t['anio_expiracion'] ?></td>
+                    <td>
+                        <?= $t['es_predeterminada'] ? "✔" : "—" ?>
+                    </td>
+
+                    <td>
+
+                        <!-- Eliminar -->
+                        <a 
+                            href="php/eliminar_tarjeta.php?id=<?= $t['id_tarjeta'] ?>" 
+                            class="btn-eliminar"
+                            onclick="return confirm('¿Eliminar esta tarjeta?')">
+                            Eliminar
+                        </a>
+
+                    </td>
+                </tr>
+            <?php } ?>
+
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Botón para mostrar formulario -->
+    <button class="btn"
+        onclick="document.getElementById('form-tarjeta').style.display='block'">
+        Agregar Nueva Tarjeta
+    </button>
+
+    <!-- Formulario oculto -->
+    <div id="form-tarjeta" style="display:none; margin-top:15px;">
+        
+        <form id="formAgregarTarjeta" action="php/guardar_tarjeta.php" method="POST" class="resumen-final">
+
+            <input id="titular" type="text" name="titular" placeholder="Titular de la tarjeta" required>
+
+            <div id="mensajeTarjeta" style="margin-top:3px; font-size:14px;"></div>
+
+            <input id="numero_tarjeta" type="text" name="numero_tarjeta" placeholder="Número de tarjeta" 
+                   required maxlength="19">
+
+            <div style="display:flex; gap:10px;">
+                <input type="text" id="expiracion" name="expiracion" placeholder="MM/AA" maxlength="5">
+                <p id="error-exp"></p>
+            </div>
+
+            <button class="btn">Guardar Tarjeta</button>
+        </form>
+    </div>
+</div>
+
+
 </section>
 
 <footer>
@@ -201,5 +283,33 @@ $direcciones = $stmt3->get_result();
 </footer>
 
 <script src="js/validar_direccion.js"></script>
+<script src="js/validar_tarjeta.js"></script>
+<script>
+    document.getElementById('numero_tarjeta').addEventListener('input', function(e) {
+        // Quita todos los espacios
+        let valor = e.target.value.replace(/\s+/g, '');
+
+        // Permite solo números
+        valor = valor.replace(/\D/g, '');
+
+        // Agrupa cada 4 dígitos
+        let formateado = valor.match(/.{1,4}/g)?.join(' ') || '';
+
+        e.target.value = formateado;
+    });
+</script>
+
+<script>
+    window.tarjetasRegistradas = [
+        <?php
+        mysqli_data_seek($tarjetas, 0); // Reinicia el puntero
+        while ($t = $tarjetas->fetch_assoc()) {
+            $ultimos4 = substr($t['numero_tarjeta'], -4);
+            echo "'$ultimos4',";
+        }
+        ?>
+    ];
+</script>
+
 </body>
 </html>
