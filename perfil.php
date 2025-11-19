@@ -59,9 +59,18 @@ $stmt3->execute();
 $direcciones = $stmt3->get_result();
 
 /* ==== 4. Obtener tarjetas del usuario ==== */
-$sql_tarjetas = "SELECT id_tarjeta, titular, numero_tarjeta, mes_expiracion, anio_expiracion, es_predeterminada 
+/* ==== 4. Obtener tarjetas del usuario (incluye marca) ==== */
+$sql_tarjetas = "SELECT 
+                    id_tarjeta, 
+                    titular, 
+                    numero_tarjeta, 
+                    mes_expiracion, 
+                    anio_expiracion, 
+                    es_predeterminada,
+                    marca
                  FROM tarjetasUsuario 
                  WHERE id_usuario = ?";
+
 $stmt4 = $conn->prepare($sql_tarjetas);
 $stmt4->bind_param("i", $id_usuario);
 $stmt4->execute();
@@ -214,34 +223,39 @@ $tarjetas = $stmt4->get_result();
                     <th>Titular</th>
                     <th>Número</th>
                     <th>Expiración</th>
-                    <th>Predeterminada</th>
+                    <th>Banca</th>
                     <th>Acción</th>
                 </tr>
             </thead>
             <tbody>
 
             <?php while ($t = $tarjetas->fetch_assoc()) { ?>
-                <tr>
-                    <td><?= $t['titular'] ?></td>
-                    <td><?= $t['numero_tarjeta'] ?></td>
-                    <td><?= $t['mes_expiracion'] ?>/<?= $t['anio_expiracion'] ?></td>
-                    <td>
-                        <?= $t['es_predeterminada'] ? "✔" : "—" ?>
-                    </td>
+            <tr>
+                <td><?= $t['titular'] ?></td>
 
-                    <td>
+                <td><?= $t['numero_tarjeta'] ?></td>
 
-                        <!-- Eliminar -->
-                        <a 
-                            href="php/eliminar_tarjeta.php?id=<?= $t['id_tarjeta'] ?>" 
-                            class="btn-eliminar"
-                            onclick="return confirm('¿Eliminar esta tarjeta?')">
-                            Eliminar
-                        </a>
+                <td><?= $t['mes_expiracion'] ?>/<?= $t['anio_expiracion'] ?></td>
 
-                    </td>
-                </tr>
+                <td style="text-align:center;">
+                    <?php if (!empty($t['marca'])) { ?>
+                        <img src="img/<?= $t['marca'] ?>.png" 
+                            alt="<?= $t['marca'] ?>" 
+                            style="height:32px; margin-bottom:4px; display:block; margin-left:auto; margin-right:auto;">
+                    <?php } ?>
+                </td>
+
+                <td>
+                    <a href="php/eliminar_tarjeta.php?id=<?= $t['id_tarjeta'] ?>" 
+                    class="btn-eliminar"
+                    onclick="return confirm('¿Eliminar esta tarjeta?')">
+                    Eliminar
+                    </a>
+                </td>
+            </tr>
             <?php } ?>
+
+
 
             </tbody>
         </table>

@@ -39,7 +39,7 @@ $total = 0;
             <?php endif; ?>
 
         <?php else: ?>
-            <a href="registro.php">Registro / Login</a>
+            <a href="../registro.php">Registro / Login</a>
         <?php endif; ?>
 
         <a href="../contacto.html">Contacto</a>

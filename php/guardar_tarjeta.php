@@ -22,11 +22,11 @@ if (
 }
 
 $titular = trim($_POST['titular']);
-$numeroTarjeta = str_replace(" ", "", $_POST['numero_tarjeta']);
+$numeroTarjeta = str_replace(" ", "", $_POST['numero_tarjeta']); // Quitar espacios
 $exp = trim($_POST['expiracion']);
 
 /* ===============================
-   VALIDAR FECHA
+   VALIDAR FECHA MM/AA
    =============================== */
 if (!preg_match("/^\d{2}\/\d{2}$/", $exp)) {
     header("Location: ../perfil.php?error=fecha_invalida");
@@ -37,18 +37,36 @@ list($mes, $anioCorto) = explode("/", $exp);
 $anioCompleto = intval("20" . $anioCorto);
 
 /* ===============================
+   DETECTAR MARCA DE TARJETA
+   =============================== */
+$marca = "desconocida";
+
+// VISA
+if (preg_match("/^4/", $numeroTarjeta)) {
+    $marca = "visa";
+}
+// MASTERCARD
+else if (preg_match("/^5[1-5]/", $numeroTarjeta)) {
+    $marca = "mastercard";
+}
+// AMEX
+else if (preg_match("/^3[47]/", $numeroTarjeta)) {
+    $marca = "amex";
+}
+
+/* ===============================
    ENMASCARAR TARJETA
    =============================== */
 $ultimos4 = substr($numeroTarjeta, -4);
 $numeroEnmascarado = "**** **** **** " . $ultimos4;
 
 /* ===============================
-   HASH (DETECTAR DUPLICADOS)
+   HASH PARA DETECTAR DUPLICADOS
    =============================== */
 $hashTarjeta = hash("sha256", $numeroTarjeta);
 
 /* ===============================
-   VERIFICAR TARJETA DUPLICADA
+   VERIFICAR DUPLICADO
    =============================== */
 $sqlCheck = "SELECT id_tarjeta FROM tarjetasUsuario 
              WHERE id_usuario = ? AND hash_tarjeta = ?";
@@ -66,22 +84,23 @@ if ($resultCheck->num_rows > 0) {
    INSERTAR TARJETA
    =============================== */
 $sql = "INSERT INTO tarjetasUsuario 
-        (id_usuario, titular, numero_tarjeta, hash_tarjeta, mes_expiracion, anio_expiracion) 
-        VALUES (?, ?, ?, ?, ?, ?)";
+        (id_usuario, titular, numero_tarjeta, hash_tarjeta, mes_expiracion, anio_expiracion, marca) 
+        VALUES (?, ?, ?, ?, ?, ?, ?)";
 
 $stmt = $conn->prepare($sql);
 $stmt->bind_param(
-    "isssis",
+    "isssiss",
     $idUsuario,
     $titular,
     $numeroEnmascarado,
     $hashTarjeta,
     $mes,
-    $anioCompleto
+    $anioCompleto,
+    $marca
 );
 
 if ($stmt->execute()) {
-    header("Location: ../perfil.php"); 
+    header("Location: ../perfil.php");
     exit;
 } else {
     header("Location: ../perfil.php?error=insertar");

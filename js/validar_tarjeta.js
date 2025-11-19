@@ -28,27 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // ===========================================================
-    //  ALGORITMO DE LUHN
-    // ===========================================================
-    function luhnCheck(num) {
-        let arr = num.split("").reverse().map(n => parseInt(n));
-        let sum = 0;
-
-        for (let i = 0; i < arr.length; i++) {
-            let n = arr[i];
-
-            if (i % 2 === 1) {
-                n *= 2;
-                if (n > 9) n -= 9;
-            }
-
-            sum += n;
-        }
-        return sum % 10 === 0;
-    }
-
-    // ===========================================================
-    //  VALIDACIÓN DE TARJETA COMPLETA
+    //  VALIDACIÓN DE TARJETA (SIN ALGORITMO DE LUHN)
     // ===========================================================
     function validarNumeroTarjeta(num) {
         num = num.replace(/\s/g, "");
@@ -60,8 +40,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const marca = detectarMarca(num);
         if (!marca) return "❌ Prefijo no válido (Visa, Mastercard o AMEX)";
-
-        if (!luhnCheck(num)) return "❌ Tarjeta inválida (Luhn)";
 
         return "";
     }
@@ -101,6 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const ultimos4 = num.slice(-4);
         return tarjetasRegistradas.includes(ultimos4);
     }
+
 
     // ===========================================================
     //  EVENTOS INPUT

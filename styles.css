@@ -1463,6 +1463,7 @@ footer {
 .tabla-compras td {
     padding: 12px 15px;
     border-bottom: 1px solid var(--color-borde);
+    text-align: center;
 }
 
 .tabla-compras th {
@@ -1870,7 +1871,8 @@ footer {
     background: #0b4fa3;
     color: white;
     border: none;
-    margin-top: 20px;
+    margin-top: 5px;
+    margin-bottom: 15px;
     border-radius: 10px;
     font-size: 16px;
     font-weight: bold;
@@ -1915,5 +1917,140 @@ footer {
 
 
 
+
+
+
+
+.modal {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.6);
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: white;
+    padding: 20px;
+    padding-bottom: 1px;
+    width: 350px;
+    border-radius: 10px;
+}
+
+.modal-content {
+    margin-top: 90px; /* ajusta a lo que quieras */
+}
+
+.btn-cerrar {
+    margin-top: 10px;
+    background: #555;
+    color: white;
+    padding: 8px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* === CONTENEDOR DEL FORM === */
+.form-tarjeta {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+    max-width: 420px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 6px; /* ↓ Más compacto */
+    font-family: "Poppins", sans-serif;
+}
+
+/* === LABELS === */
+.form-tarjeta label {
+    font-weight: 600;
+    font-size: 13px;   /* ↓ Un poquito más pequeño */
+    color: #333;
+    margin-bottom: 0;  /* ↓ Más pegado al input */
+    margin-top: 1px;
+    margin-bottom: 1px;
+}
+
+/* === INPUTS === */
+.form-tarjeta input[type="text"],
+.form-tarjeta input[type="number"] {
+    padding: 7px 10px;  /* ↓ Reducido */
+    border: 2px solid #e2e8f0;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: all 0.2s ease-in-out;
+    margin-top: 1px;
+    margin-bottom: 1px;
+}
+
+/* Focus */
+.form-tarjeta input:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 4px rgba(0, 123, 255, 0.25); /* ↓ Más pequeño */
+}
+
+/* === BOTÓN === */
+.form-tarjeta .btn-confirmar {
+    margin-top: 10px; /* ↓ Más cerca del último input */
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 10px; /* ↓ Menos alto */
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+}
+
+.form-tarjeta .btn-confirmar:hover {
+    background: #0056cc;
+    transform: translateY(-1px);
+}
+
+.form-tarjeta .btn-confirmar:active {
+    transform: translateY(0);
+}
 
 

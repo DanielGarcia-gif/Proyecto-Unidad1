@@ -5,6 +5,10 @@ require '../vendor/autoload.php';
 use Dompdf\Dompdf;
 use Dompdf\Options;
 
+echo "<pre>";
+var_dump(class_exists("Dompdf\\Dompdf"));
+echo "</pre>";
+
 function generarTicketPDF($id_compra) {
     global $conn;
     

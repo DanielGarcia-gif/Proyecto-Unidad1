@@ -53,6 +53,26 @@ foreach ($carrito as $item) {
 $costoEnvio = 80;
 $totalFinal = $totalProductos + $costoEnvio;
 
+
+        // CONSULTAR TARJETAS DEL USUARIO
+        $tarjetasUsuario = [];
+
+        if ($idUsuario) {
+            $sqlTar = "SELECT id_tarjeta, numero_tarjeta, marca 
+                    FROM tarjetasUsuario 
+                    WHERE id_usuario = $idUsuario";
+            $resTar = $conn->query($sqlTar);
+
+            if ($resTar && $resTar->num_rows > 0) {
+                while ($t = $resTar->fetch_assoc()) {
+                    // Mostrar solo últimos 4 dígitos
+                    $t['numero_tarjeta'] = '**** **** **** ' . substr($t['numero_tarjeta'], -4);
+                    $tarjetasUsuario[] = $t;
+                }
+            }
+        }
+        
+
 $conn->close();
 ?>
 
@@ -148,15 +168,73 @@ $conn->close();
             <p><strong>Costo de Envío:</strong> $<?= number_format($costoEnvio,2) ?></p>
             <p><strong>Total Final:</strong> $<?= number_format($totalFinal,2) ?></p>
 
-            <button type="submit" name="metodo_pago" value="tarjeta" class="btn-confirmar">Pagar con Tarjeta</button>
+            <button type="button" class="btn-confirmar" id="btnPagarTarjeta">Pagar con Tarjeta</button>
             <button type="submit" name="metodo_pago" value="paypal" class="btn-confirmar">Pagar con PayPal</button>
         </form>
+
+        <!-- ================= MODAL TARJETAS ================= -->
+        <div id="modalTarjetas" class="modal" style="display:none;">
+            <div class="modal-content">
+
+                <?php if (!empty($tarjetasUsuario)): ?>
+                <!-- FORMULARIO SELECCIONAR TARJETA -->
+                <div id="formSeleccionTarjeta">
+                    <h4>Elegir tarjeta guardada</h4>
+                    <form action="php/procesar_pago.php" method="POST">
+                        <select name="id_tarjeta" required>
+                            <?php foreach ($tarjetasUsuario as $tar): ?>
+                                <option value="<?= $tar['id_tarjeta'] ?>">
+                                    <?= htmlspecialchars($tar['marca']) ?> - <?= $tar['numero_tarjeta'] ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                        <label>CVV:</label>
+                        <input type="text" name="cvv" maxlength="4" required>
+                        <button type="submit" class="btn-confirmar">Pagar</button>
+                    </form>
+                </div>
+
+                <!-- FORMULARIO AGREGAR TARJETA TEMPORAL -->
+                <div id="formAgregarTarjetaModal" style="display:none;">
+                    <h4>Pagar con nueva tarjeta</h4>
+                    <form action="php/procesar_pago.php" method="POST">
+                        <input type="text" name="titular" placeholder="Titular de la tarjeta" required>
+                        <input type="text" name="numero_tarjeta" placeholder="Número de tarjeta" maxlength="19" required>
+                        <input type="text" name="expiracion" placeholder="MM/AA" maxlength="5" required>
+                        <input type="text" name="cvv" placeholder="CVV" maxlength="4" minlength="3" required>
+                        <button type="submit" class="btn-confirmar">Pagar</button>
+                    </form>
+                    <button class="btn-confirmar" id="btnVolverSeleccionTarjeta">Elegir tarjeta guardada</button>
+                </div>
+
+                <?php else: ?>
+                <!-- SI NO HAY TARJETAS GUARDADAS -->
+                <div id="formAgregarTarjetaModal">
+                    <h4>Pagar con nueva tarjeta</h4>
+                    <form action="php/procesar_pago.php" method="POST">
+                        <input type="text" name="titular" placeholder="Titular de la tarjeta" required>
+                        <input type="text" name="numero_tarjeta" placeholder="Número de tarjeta" maxlength="19" required>
+                        <input type="text" name="expiracion" placeholder="MM/AA" maxlength="5" required>
+                        <input type="text" name="cvv" placeholder="CVV" maxlength="4" required>
+                        <button type="submit" class="btn-confirmar">Pagar</button>
+                    </form>
+                </div>
+                <?php endif; ?>
+
+                <button class="btn-confirmar" id="cerrarModalTarjetas">Cerrar</button>
+            </div>
+        </div>
+
+
     </div>
 </section>
 
 <footer>
 <p>&copy; 2025 FaDa Sports. Todos los derechos reservados.</p>
 </footer>
+<!-- <script src="js/validar_tarjeta_modal.js"></script> -->
+ <script src="js/modal_tarjeta_direccion.js"></script>
+<script src="js/modal_tarjetas.js"></script>
 
 </body>
 </html>
