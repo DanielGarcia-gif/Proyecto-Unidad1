@@ -45,7 +45,9 @@ if (!isset($_SESSION['carrito'])) {
 
 // Si ya existe el producto en el carrito, aumentamos la cantidad
 if (isset($_SESSION['carrito'][$id_variante])) {
-    $_SESSION['carrito'][$id_variante]['cantidad']++;
+    if($variante['stock'] > $_SESSION['carrito'][$id_variante]['cantidad']) {
+        $_SESSION['carrito'][$id_variante]['cantidad']++;
+    }
 } else {
     // Si no existe, lo agregamos
     $_SESSION['carrito'][$id_variante] = [
