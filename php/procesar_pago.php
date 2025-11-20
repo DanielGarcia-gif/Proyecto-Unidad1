@@ -16,7 +16,7 @@ $ciudad = "";
 $codigo_postal = "";
 
 // Caso A: usuario eligió una dirección guardada
-if (isset($_POST['id_direccion'])) {
+if (!empty($_POST['id_direccion'])) {
     $id_direccion = (int)$_POST['id_direccion'];
 
     $sql = "SELECT direccion, ciudad, codigo_postal
