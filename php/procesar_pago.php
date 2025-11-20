@@ -43,8 +43,85 @@ else {
 
 // Validar que sí tenemos dirección
 if (empty($direccion) || empty($ciudad) || empty($codigo_postal)) {
-    die("Error: la dirección de envío está incompleta.");
+    echo '
+    <html>
+    <head>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                line-height: 1.6;
+                color: #333;
+                background: #f8f9fa;
+            }
+            .header {
+                text-align: center;
+                margin-bottom: 30px;
+                border-bottom: 2px solid #ddd;
+                padding-bottom: 20px;
+            }
+            .logo {
+                max-width: 200px;
+                margin-bottom: 15px;
+            }
+            .titulo {
+                font-size: 26px;
+                color: #c0392b;
+                margin: 10px 0;
+            }
+            .info-seccion {
+                max-width: 500px;
+                margin: 30px auto;
+                padding: 20px;
+                background: #fff3f3;
+                border-left: 5px solid #e74c3c;
+                border-radius: 5px;
+                box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            }
+            .mensaje {
+                font-size: 18px;
+                color: #c0392b;
+                margin-bottom: 15px;
+            }
+            .btn-volver {
+                display: inline-block;
+                padding: 10px 20px;
+                font-size: 16px;
+                background: #3498db;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                text-decoration: none;
+                cursor: pointer;
+                margin-top: 15px;
+            }
+            .btn-volver:hover {
+                background: #2980b9;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="header">
+
+            <h1 class="titulo">Dirección Incompleta</h1>
+        </div>
+
+        <div class="info-seccion" style="text-align: center;">
+            <img src="../img/zona-prohibida.png" class="logo" alt="Logo">
+            <p class="mensaje"><strong>Faltan datos necesarios para procesar tu envío.</strong></p>
+            <p>Por favor revisa y completa todos los campos de tu dirección antes de continuar con tu compra.</p>
+
+            <a href="../carrito/carrito.php" class="btn-volver">Volver</a>
+
+        </div>
+    </body>
+    </html>
+    ';
+    exit;
 }
+
+
+
 
 $totalProductos = 0;
 foreach ($carrito as $item) {
