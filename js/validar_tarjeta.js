@@ -11,9 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return valor.replace(/\D/g, "").replace(/(.{4})/g, "$1 ").trim();
     }
 
-    // ===========================================================
-    //  MARCAS DE TARJETA (patrones)
-    // ===========================================================
+ 
     const bancosValidos = {
         visa: /^4\d{12}(\d{3})?$/,             // 13 o 16 dígitos
         mastercard: /^5[1-5]\d{14}$/,          // 16 dígitos
@@ -27,9 +25,6 @@ document.addEventListener("DOMContentLoaded", () => {
         return "";
     }
 
-    // ===========================================================
-    //  VALIDACIÓN DE TARJETA (SIN ALGORITMO DE LUHN)
-    // ===========================================================
     function validarNumeroTarjeta(num) {
         num = num.replace(/\s/g, "");
 
@@ -44,9 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return "";
     }
 
-    // ===========================================================
-    //  VALIDACIÓN DE FECHA MM/AA
-    // ===========================================================
+
     const inputExp = document.getElementById("expiracion");
     const msgExp = document.getElementById("error-exp");
 
@@ -71,9 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return "";
     }
 
-    // ===========================================================
-    //  DETECTAR DUPLICADOS
-    // ===========================================================
+
     function tarjetaYaExiste(num) {
         num = num.replace(/\s/g, "");
         const ultimos4 = num.slice(-4);
@@ -81,9 +72,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    // ===========================================================
-    //  EVENTOS INPUT
-    // ===========================================================
     inputTarjeta.addEventListener("input", () => {
 
         inputTarjeta.value = formatearTarjeta(inputTarjeta.value);
@@ -117,9 +105,7 @@ document.addEventListener("DOMContentLoaded", () => {
         msgExp.style.color = error ? "red" : "green";
     });
 
-    // ===========================================================
-    //  VALIDACIÓN FINAL DEL FORM
-    // ===========================================================
+
     form.addEventListener("submit", (e) => {
         const tarjeta = inputTarjeta.value.replace(/\s/g, "");
         const fecha = inputExp.value;

@@ -9,9 +9,7 @@ if (!isset($_SESSION['id_usuario'])) {
 
 $idUsuario = $_SESSION['id_usuario'];
 
-/* ===============================
-   VALIDAR CAMPOS OBLIGATORIOS
-   =============================== */
+
 if (
     !isset($_POST['titular']) || trim($_POST['titular']) === "" ||
     !isset($_POST['numero_tarjeta']) || trim($_POST['numero_tarjeta']) === "" ||
@@ -25,9 +23,7 @@ $titular = trim($_POST['titular']);
 $numeroTarjeta = str_replace(" ", "", $_POST['numero_tarjeta']); // Quitar espacios
 $exp = trim($_POST['expiracion']);
 
-/* ===============================
-   VALIDAR FECHA MM/AA
-   =============================== */
+
 if (!preg_match("/^\d{2}\/\d{2}$/", $exp)) {
     header("Location: ../perfil.php?error=fecha_invalida");
     exit;
@@ -36,9 +32,7 @@ if (!preg_match("/^\d{2}\/\d{2}$/", $exp)) {
 list($mes, $anioCorto) = explode("/", $exp);
 $anioCompleto = intval("20" . $anioCorto);
 
-/* ===============================
-   DETECTAR MARCA DE TARJETA
-   =============================== */
+
 $marca = "desconocida";
 
 // VISA
@@ -54,20 +48,13 @@ else if (preg_match("/^3[47]/", $numeroTarjeta)) {
     $marca = "amex";
 }
 
-/* ===============================
-   ENMASCARAR TARJETA
-   =============================== */
 $ultimos4 = substr($numeroTarjeta, -4);
 $numeroEnmascarado = "**** **** **** " . $ultimos4;
 
-/* ===============================
-   HASH PARA DETECTAR DUPLICADOS
-   =============================== */
+
 $hashTarjeta = hash("sha256", $numeroTarjeta);
 
-/* ===============================
-   VERIFICAR DUPLICADO
-   =============================== */
+
 $sqlCheck = "SELECT id_tarjeta FROM tarjetasUsuario 
              WHERE id_usuario = ? AND hash_tarjeta = ?";
 $stmtCheck = $conn->prepare($sqlCheck);
@@ -80,9 +67,7 @@ if ($resultCheck->num_rows > 0) {
     exit;
 }
 
-/* ===============================
-   INSERTAR TARJETA
-   =============================== */
+
 $sql = "INSERT INTO tarjetasUsuario 
         (id_usuario, titular, numero_tarjeta, hash_tarjeta, mes_expiracion, anio_expiracion, marca) 
         VALUES (?, ?, ?, ?, ?, ?, ?)";

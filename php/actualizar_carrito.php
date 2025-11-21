@@ -34,7 +34,15 @@ if ($nueva_cantidad < 1) {
     exit;
 }
 
-$_SESSION['carrito'][$id_variante]['cantidad'] = $nueva_cantidad;
+$id_usuario = $_SESSION['id_usuario'];
+
+$sql = "UPDATE carrito_detalle 
+        SET cantidad = ? 
+        WHERE id_usuario = ? AND id_variante = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("iii", $nueva_cantidad, $id_usuario, $id_variante);
+$stmt->execute();
+
 
 header("Location: ../carrito/carrito.php");
 exit;

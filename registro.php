@@ -55,6 +55,11 @@ unset($_SESSION['register_error'], $_SESSION['login_error']);
                         <input type="password" name="password" placeholder="Contraseña" required>
                         <input type="submit" value="Ingresar" class="btn" style="margin-top: 40px;">
                     </form>
+                    <form method="post" action="php/login_invitado.php">
+                        <button type="submit" class="btn" style="margin-top: 15px; background:#444;">
+                            Ingresar sin cuenta
+                        </button>
+                    </form>
                 </div>
 
                 <div class="form-box registro-box">
