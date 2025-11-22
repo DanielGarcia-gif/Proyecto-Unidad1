@@ -36,6 +36,9 @@ if ($result->num_rows > 0) {
     <title>FaDa Sports - Catálogo</title>
     <link rel="icon" type="img/logo.jpg" href="img/logo.jpg">
     <link rel="stylesheet" href="styles.css">
+    <!-- OwlCarousel CSS (CDN) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" />
 </head>
 <body>
 
@@ -62,22 +65,36 @@ if ($result->num_rows > 0) {
 
     <?php foreach ($categorias as $categoria => $productosCat): ?>
         <h3 class="categoria-titulo"><?= htmlspecialchars($categoria) ?></h3>
-        <div class="productos-grid">
-            <?php foreach ($productosCat as $p): ?>
-                <div class="producto">
-                    <img src="<?= htmlspecialchars($p['imagen']) ?>" alt="<?= htmlspecialchars($p['nombre']) ?>">
-                    <h3><?= htmlspecialchars($p['nombre']) ?></h3>
-                    <p>$<?= number_format($p['precio'], 2) ?> MXN</p>
 
-                    <ul class="detalle-producto">
-                        <li><strong>Material:</strong> <?= htmlspecialchars($p['material']) ?></li>
-                        <li><strong>Tallas:</strong> <?= htmlspecialchars($p['tallas']) ?></li>
-                        <li><strong>Colores:</strong> <?= htmlspecialchars($p['colores']) ?></li>
-                    </ul>
+        <div class="carousel-wrapper">
+            
+            <button class="carousel-nav carousel-prev">
+                <img src="img/flecha-izquierda.png" alt="prev">
+            </button>
 
-                    <a href="producto/producto.php?id=<?= $p['id_producto'] ?>" class="btn-producto">Ver Detalles</a>
-                </div>
-            <?php endforeach; ?>
+            <div class="owl-carousel owl-theme productos-carousel">
+                <?php foreach ($productosCat as $p): ?>
+                    <div class="item producto-card">
+                        <img src="<?= htmlspecialchars($p['imagen']) ?>" alt="<?= htmlspecialchars($p['nombre']) ?>">
+                        <h3><?= htmlspecialchars($p['nombre']) ?></h3>
+
+                        <p class="precio">$<?= number_format($p['precio'], 2) ?> MXN</p>
+
+                        <ul class="detalle-producto">
+                            <li><strong>Material:</strong> <?= htmlspecialchars($p['material']) ?></li>
+                            <li><strong>Tallas:</strong> <?= htmlspecialchars($p['tallas']) ?></li>
+                            <li><strong>Colores:</strong> <?= htmlspecialchars($p['colores']) ?></li>
+                        </ul>
+
+                        <a href="producto/producto.php?id=<?= $p['id_producto'] ?>" class="btn-producto">Ver Detalles</a>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+
+            <button class="carousel-nav carousel-next">
+                <img src="img/flecha-derecha.png" alt="next">
+            </button>
+
         </div>
     <?php endforeach; ?>
 </section>
@@ -85,6 +102,48 @@ if ($result->num_rows > 0) {
 <footer>
     <p>&copy; 2025 FaDa Sports. Todos los derechos reservados.</p>
 </footer>
+
+<!-- jQuery + OwlCarousel JS (CDN) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+
+<script>
+        $(document).ready(function(){
+
+        $('.carousel-wrapper').each(function(){
+
+            const $wrapper = $(this);
+            const $owl = $wrapper.find('.owl-carousel');
+
+            $owl.owlCarousel({
+                loop: true,
+                margin: 20,
+                dots: false,
+                nav: false,
+                center: true,
+                autoplay: true,
+                autoplayTimeout: 10000,
+                autoplayHoverPause: true,
+                smartSpeed: 600,
+                responsive:{
+                    0:{ items:1 },
+                    600:{ items:2 },
+                    1000:{ items:3 }
+                }
+            });
+
+            $wrapper.find('.carousel-prev').click(function(){
+                $owl.trigger('prev.owl.carousel');
+            });
+
+            $wrapper.find('.carousel-next').click(function(){
+                $owl.trigger('next.owl.carousel');
+            });
+
+        });
+
+        });
+</script>
 
 </body>
 </html>

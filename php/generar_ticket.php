@@ -53,64 +53,88 @@ function generarTicketPDF($id_compra) {
     $html = '
     <html>
     <head>
-        <style>
+       <style>
             body {
                 font-family: Arial, sans-serif;
-                line-height: 1.6;
                 color: #333;
+                padding: 20px;
             }
+
             .header {
-                text-align: center;
-                margin-bottom: 30px;
-                border-bottom: 2px solid #ddd;
-                padding-bottom: 20px;
+                display: flex;
+                align-items: center;
+                gap: 15px;
+                border-bottom: 2px solid #eee;
+                padding-bottom: 15px;
+                margin-bottom: 25px;
             }
+
             .logo {
-                max-width: 200px;
-                margin-bottom: 15px;
+                width: 100px;
             }
+
             .titulo {
-                font-size: 24px;
-                color: #2c3e50;
-                margin: 10px 0;
+                font-size: 26px;
+                color: #3949ab;
+                font-weight: bold;
+                margin: 0;
             }
+
             .info-seccion {
                 margin: 20px 0;
                 padding: 15px;
-                background: #f8f9fa;
+                background: #f1f4ff;
+                border-left: 4px solid #3949ab;
                 border-radius: 5px;
             }
+
+            .info-seccion h3 {
+                margin-top: 0;
+                color: #3949ab;
+            }
+
             .productos-tabla {
                 width: 100%;
                 border-collapse: collapse;
-                margin: 20px 0;
+                margin-top: 15px;
+                font-size: 14px;
             }
-            .productos-tabla th, .productos-tabla td {
-                border: 1px solid #ddd;
+
+            .productos-tabla th {
+                background: #3949ab;
+                color: white;
                 padding: 8px;
                 text-align: left;
             }
-            .productos-tabla th {
-                background-color: #f4f4f4;
+
+            .productos-tabla td {
+                border-bottom: 1px solid #ddd;
+                padding: 8px;
             }
+
             .total {
                 text-align: right;
                 font-size: 18px;
+                font-weight: bold;
+                background: #e8eaf6;
+                padding: 12px;
+                border-radius: 5px;
                 margin-top: 20px;
-                padding: 10px;
-                background: #e9ecef;
             }
+
             .footer {
                 margin-top: 30px;
                 text-align: center;
-                font-size: 12px;
                 color: #666;
+                font-size: 12px;
+                border-top: 1px solid #ddd;
+                padding-top: 15px;
             }
         </style>
     </head>
     <body>
         <div class="header">
-            <!--<img src="../img/logo.png" class="logo">-->
+            <!--<img src="./img/logo.jpg" class="logo">-->
             <h1 class="titulo">Ticket de Compra</h1>
         </div>
         
