@@ -106,6 +106,15 @@ $tarjetas = $stmt4->get_result();
 <div class="perfil-card">
     <h2>Datos del Usuario</h2>
 
+    <?php if (isset($_GET['error']) && $_GET['error'] == 'email_duplicado'): ?>
+        <p style="color:red; padding-bottom: 10px;">El correo ya está registrado por otro usuario.</p>
+    <?php endif; ?>
+
+    <?php if (isset($_GET['msg']) && $_GET['msg'] == 'ok'): ?>
+        <p style="color:green; padding-bottom: 10px;">Datos actualizados correctamente.</p>
+    <?php endif; ?>
+
+
     <form action="update_usuario.php" method="POST" class="perfil-form">
 
         <p><strong>Nombre:</strong> <?= $result_user['nombre'] ?></p>
@@ -117,7 +126,7 @@ $tarjetas = $stmt4->get_result();
 
         <div class="field-row">
             <label>Teléfono:</label>
-            <input type="text" name="telefono" value="<?= $result_user['telefono'] ?>">
+            <input maxlength="10" type="text" name="telefono" value="<?= $result_user['telefono'] ?>">
         </div>
 
         <button class="btn">Actualizar Información</button>
@@ -322,6 +331,7 @@ $tarjetas = $stmt4->get_result();
 
 <script src="js/validar_direccion.js"></script>
 <script src="js/validar_tarjeta.js"></script>
+<script src="js/validar_telefono.js"></script>
 <script>
     document.getElementById('numero_tarjeta').addEventListener('input', function(e) {
         // Quita todos los espacios
