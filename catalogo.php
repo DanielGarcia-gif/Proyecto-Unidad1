@@ -122,7 +122,7 @@ if ($result->num_rows > 0) {
                 nav: false,
                 center: true,
                 autoplay: true,
-                autoplayTimeout: 10000,
+                autoplayTimeout: 5000,
                 autoplayHoverPause: true,
                 smartSpeed: 600,
                 responsive:{
