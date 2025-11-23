@@ -8,9 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const formAgregar = document.getElementById("formAgregarTarjetaModal");
     const btnVolver = document.getElementById("btnVolverSeleccionTarjeta");
 
-    // ============================================================
-    // ABRIR MODAL
-    // ============================================================
+
     btnAbrir.addEventListener("click", () => {
         modal.style.display = "flex";
 
@@ -22,16 +20,10 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // ============================================================
-    // CERRAR MODAL
-    // ============================================================
     btnCerrar.addEventListener("click", () => {
         modal.style.display = "none";
     });
 
-    // ============================================================
-    // CAMBIO ENTRE FORMULARIOS
-    // ============================================================
     if (formSeleccion) {
 
         // Botón agregar nueva tarjeta
@@ -55,9 +47,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // ============================================================
-    // VALIDACIONES DEL FORMULARIO DE AGREGAR TARJETA
-    // ============================================================
     if (formAgregar) {
 
         const inputNumeroTarjeta = formAgregar.querySelector('input[name="numero_tarjeta"]');
@@ -78,9 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const spanExp = inputExp.previousElementSibling;
         const spanCVV = inputCVV.previousElementSibling;
 
-        // ============================================================
-        // VALIDACIÓN NUMERO DE TARJETA
-        // ============================================================
+
         const bancosValidos = {
             visa: /^4\d{12}(\d{3})?$/,       // Visa 13 o 16 dígitos
             mastercard: /^5[1-5]\d{14}$/,    // MasterCard: 16 dígitos
@@ -122,9 +109,6 @@ document.addEventListener("DOMContentLoaded", () => {
             spanNum.textContent = validarNumeroTarjeta(soloNum);
         });
 
-        // ============================================================
-        // VALIDACIÓN FECHA EXPIRACIÓN
-        // ============================================================
         function validarExpiracion(valor) {
 
             if (!/^\d{2}\/\d{2}$/.test(valor))
@@ -152,9 +136,7 @@ document.addEventListener("DOMContentLoaded", () => {
             spanExp.textContent = validarExpiracion(inputExp.value);
         });
 
-        // ============================================================
-        // VALIDACIÓN CVV
-        // ============================================================
+    
         function validarCVV(cvv) {
             if (!/^\d{3,4}$/.test(cvv))
                 return "❌ CVV inválido (3 o 4 dígitos)";
@@ -165,9 +147,7 @@ document.addEventListener("DOMContentLoaded", () => {
             spanCVV.textContent = validarCVV(inputCVV.value);
         });
 
-        // ============================================================
-        // VALIDACIÓN FINAL AL ENVIAR FORM
-        // ============================================================
+
         const formNuevo = formAgregar.querySelector("form");
 
         formNuevo.addEventListener("submit", (e) => {

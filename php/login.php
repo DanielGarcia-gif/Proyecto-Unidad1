@@ -20,6 +20,7 @@ $sql = "SELECT u.id_usuario, u.id_rol, u.nombre, u.contrasena, r.nombre_rol AS r
     FROM usuarios u
     LEFT JOIN roles r ON u.id_rol = r.id_rol
     WHERE u.email = ? LIMIT 1";
+
 $stmt = $conn->prepare($sql);
 $stmt->bind_param('s', $email);
 $stmt->execute();
@@ -43,8 +44,34 @@ if (!password_verify($password, $user['contrasena'])) {
 $_SESSION['id_usuario'] = $user['id_usuario'];
 $_SESSION['id_rol'] = $user['id_rol'];
 $_SESSION['nombre'] = $user['nombre'];
-// Guardar nombre del rol para comprobaciones rápidas
 $_SESSION['rol_nombre'] = $user['rol_nombre'] ?? null;
+
+
+
+$id_usuario = $user['id_usuario'];
+
+// 1Buscar carrito existente
+$sqlCarrito = "SELECT id_carrito FROM carrito WHERE id_usuario = ? LIMIT 1";
+$stmtCar = $conn->prepare($sqlCarrito);
+$stmtCar->bind_param("i", $id_usuario);
+$stmtCar->execute();
+$resCar = $stmtCar->get_result();
+
+if ($resCar && $resCar->num_rows > 0) {
+    // Ya tenía un carrito
+    $car = $resCar->fetch_assoc();
+    $_SESSION['id_carrito'] = $car['id_carrito'];
+} else {
+    // No tenía → crear uno nuevo
+    $sqlCrear = "INSERT INTO carrito (id_usuario) VALUES (?)";
+    $stmtCrear = $conn->prepare($sqlCrear);
+    $stmtCrear->bind_param("i", $id_usuario);
+    $stmtCrear->execute();
+
+    $_SESSION['id_carrito'] = $conn->insert_id;
+}
+// ---------------------------------------------
+
 
 header('Location: ../index.php');
 exit;

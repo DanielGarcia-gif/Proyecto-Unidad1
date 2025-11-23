@@ -1,9 +1,46 @@
 <?php
 session_start();
-$carrito = $_SESSION['carrito'] ?? [];
-$total = 0;
-?>
+require '../php/conexion.php';
 
+// Si no hay usuario logueado redirigir
+if (!isset($_SESSION['id_usuario']) || !isset($_SESSION['id_carrito'])) {
+    header("Location: ../registro.php");
+    exit;
+}
+
+$id_carrito = $_SESSION['id_carrito'];
+
+$sql = "SELECT 
+            cd.id_variante,
+            cd.cantidad,
+            v.precio,
+            v.stock,
+            p.nombre,
+            p.imagen,
+            t.nombre_talla,
+            c.nombre_color
+        FROM carrito_detalle cd
+        INNER JOIN variantesproducto v ON cd.id_variante = v.id_variante
+        INNER JOIN productos p ON v.id_producto = p.id_producto
+        INNER JOIN tallas t ON v.id_talla = t.id_talla
+        INNER JOIN colores c ON v.id_color = c.id_color
+        WHERE cd.id_carrito = ?";
+
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $id_carrito);
+$stmt->execute();
+$res = $stmt->get_result();
+
+$carrito = [];
+$total = 0;
+
+while ($row = $res->fetch_assoc()) {
+    $row['subtotal'] = $row['precio'] * $row['cantidad'];
+    $total += $row['subtotal'];
+    $carrito[] = $row;
+}
+
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -21,17 +58,10 @@ $total = 0;
         <a href="../index.php">Inicio</a>
         <a href="../catalogo.php">Catálogo</a>
         <?php if (!empty($_SESSION['id_usuario'])): ?>
-
             <a href="../perfil.php">Mi Perfil (<?php echo htmlspecialchars($_SESSION['nombre']); ?>)</a>
 
             <?php
-                // Mostrar enlace Admin solo si el rol en sesión es Admin
-                $esAdmin = false;
-                if (!empty($_SESSION['rol_nombre'])) {
-                    $esAdmin = ($_SESSION['rol_nombre'] === 'Admin');
-                } elseif (!empty($_SESSION['id_rol'])) {
-                    $esAdmin = ($_SESSION['id_rol'] == 2);
-                }
+                $esAdmin = (!empty($_SESSION['rol_nombre']) && $_SESSION['rol_nombre'] === 'Admin');
             ?>
 
             <?php if ($esAdmin): ?>
@@ -54,33 +84,46 @@ $total = 0;
             <p>No tienes productos en tu carrito.</p>
         <?php else: ?>
             <?php foreach ($carrito as $item): ?>
-                <?php $subtotal = $item['precio'] * $item['cantidad']; ?>
-                <?php $total += $subtotal; ?>
+                <div class="producto-carrito" 
+                     data-id-variante="<?= $item['id_variante'] ?>"
+                     data-precio="<?= $item['precio'] ?>"
+                     data-stock="<?= $item['stock'] ?>">
 
-                <div class="producto-carrito" data-id-variante="<?= $item['id_variante'] ?>" data-precio="<?= $item['precio'] ?>" data-stock="<?= $item['stock'] ?>">
-                    <img src="../<?= htmlspecialchars($item['imagen']) ?>" alt="<?= htmlspecialchars($item['nombre']) ?>">
+                    <img src="../<?= htmlspecialchars($item['imagen']) ?>" 
+                         alt="<?= htmlspecialchars($item['nombre']) ?>">
+
                     <div class="info-producto">
                         <h3><?= htmlspecialchars($item['nombre']) ?></h3>
                         <p class="precio">$<?= number_format($item['precio'], 2) ?> MXN</p>
-                        <p><strong>Talla:</strong> <?= htmlspecialchars($item['talla']) ?></p>
-                        <p><strong>Color:</strong> <?= htmlspecialchars($item['color']) ?></p>
-                        <p class="stock-disponible">Stock disponible: <span class="stock-valor"><?= $item['stock'] ?></span></p>
+                        <p><strong>Talla:</strong> <?= htmlspecialchars($item['nombre_talla']) ?></p>
+                        <p><strong>Color:</strong> <?= htmlspecialchars($item['nombre_color']) ?></p>
+                        <p class="stock-disponible">
+                            Stock disponible: 
+                            <span class="stock-valor"><?= $item['stock'] ?></span>
+                        </p>
 
-                        <!-- Cantidad: formulario que se enviará automáticamente al cambiar el valor -->
+                        <!-- Actualizar cantidad -->
                         <div class="cantidad">
                             <form action="../php/actualizar_carrito.php" method="POST" class="form-cantidad">
                                 <input type="hidden" name="id_variante" value="<?= $item['id_variante'] ?>">
-                                <label for="cantidad-<?= $item['id_variante'] ?>"><strong>Cantidad:</strong></label>
-                                <input type="number" class="input-cantidad" id="cantidad-<?= $item['id_variante'] ?>" name="cantidad" value="<?= $item['cantidad'] ?>" min="1" max="<?= $item['stock'] ?>">
+                                <label><strong>Cantidad:</strong></label>
+                                <input type="number" 
+                                       class="input-cantidad" 
+                                       name="cantidad" 
+                                       value="<?= $item['cantidad'] ?>" 
+                                       min="1" 
+                                       max="<?= $item['stock'] ?>">
                                 <button type="submit" style="display:none">Actualizar</button>
                             </form>
                         </div>
-                        <!-- subtotal removed: calculation handled server-side after submit -->
                     </div>
+
+                    <!-- Eliminar -->
                     <form action="../php/eliminar_carrito.php" method="POST">
                         <input type="hidden" name="id_variante" value="<?= $item['id_variante'] ?>">
                         <button type="submit" class="btn-eliminar">Eliminar</button>
                     </form>
+
                 </div>
             <?php endforeach; ?>
         <?php endif; ?>
@@ -88,6 +131,7 @@ $total = 0;
 
     <div class="carrito-total">
         <h2>Total: <span>$<?= number_format($total, 2) ?> MXN</span></h2>
+
         <?php if ($total > 0): ?>
             <form action="../detalle_compra.php" method="POST">
                 <button type="submit" class="btn-pagar">Proceder al pago</button>
@@ -101,46 +145,43 @@ $total = 0;
 </footer>
 
 <script>
-// Actualizar totales cuando cambie alguna cantidad
 function formatMoney(n){
     return Number(n).toLocaleString('es-MX', {minimumFractionDigits:2, maximumFractionDigits:2});
 }
 
+// Recalcular total localmente
 function recalcularTotal(){
     let total = 0;
-    document.querySelectorAll('.producto-carrito').forEach(function(card){
+    document.querySelectorAll('.producto-carrito').forEach(card => {
         const precio = parseFloat(card.dataset.precio);
         const cantidad = parseInt(card.querySelector('.input-cantidad').value) || 0;
-        const subtotal = precio * cantidad;
-        total += subtotal;
+        total += precio * cantidad;
     });
     document.querySelector('.carrito-total h2 span').textContent = '$' + formatMoney(total) + ' MXN';
 }
 
-document.querySelectorAll('.input-cantidad').forEach(function(input){
-    // almacenar valor previo
+document.querySelectorAll('.input-cantidad').forEach(input => {
     input.dataset.prev = input.value;
-    input.addEventListener('change', function(e){
+    input.addEventListener('change', () => {
         const card = input.closest('.producto-carrito');
-        const max = parseInt(card.dataset.stock) || 0;
-        let val = parseInt(input.value) || 0;
+        const max = parseInt(card.dataset.stock);
+        let val = parseInt(input.value) || 1;
+
         if (val < 1) val = 1;
         if (val > max) {
             alert('La cantidad supera el stock disponible.');
             input.value = input.dataset.prev;
             return;
         }
-        // actualizar prev
+
         input.dataset.prev = val;
-        // recalcular localmente
         recalcularTotal();
-        // enviar el formulario que envía a actualizar_carrito.php (sin AJAX)
+
         const form = input.closest('form.form-cantidad');
         if (form) form.submit();
     });
 });
 
-// Inicializar total/formato
 recalcularTotal();
 </script>
 

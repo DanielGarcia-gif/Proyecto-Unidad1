@@ -64,7 +64,21 @@ if ($result->num_rows > 0) {
     <h2>Catálogo</h2>
 
     <?php foreach ($categorias as $categoria => $productosCat): ?>
+<<<<<<< HEAD
         <h3 class="categoria-titulo"><?= htmlspecialchars($categoria) ?></h3>
+=======
+    <h3 class="categoria-titulo"><?= htmlspecialchars($categoria) ?></h3>
+
+    <div class="carrusel-contenedor">
+        <button class="carrusel-btn prev">❮</button>
+
+        <div class="carrusel" data-categoria="<?= htmlspecialchars($categoria) ?>">
+            <?php foreach ($productosCat as $p): ?>
+                <div class="producto item">
+                    <img src="<?= htmlspecialchars($p['imagen']) ?>" alt="<?= htmlspecialchars($p['nombre']) ?>">
+                    <h3><?= htmlspecialchars($p['nombre']) ?></h3>
+                    <p>$<?= number_format($p['precio'], 2) ?> MXN</p>
+>>>>>>> devs4
 
         <div class="carousel-wrapper">
             
@@ -96,13 +110,18 @@ if ($result->num_rows > 0) {
             </button>
 
         </div>
-    <?php endforeach; ?>
+
+        <button class="carrusel-btn next">❯</button>
+    </div>
+<?php endforeach; ?>
+
 </section>
 
 <footer>
     <p>&copy; 2025 FaDa Sports. Todos los derechos reservados.</p>
 </footer>
 
+<<<<<<< HEAD
 <!-- jQuery + OwlCarousel JS (CDN) -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
@@ -144,6 +163,9 @@ if ($result->num_rows > 0) {
 
         });
 </script>
+=======
+<script src="carrusel.js"></script>
+>>>>>>> devs4
 
 </body>
 </html>

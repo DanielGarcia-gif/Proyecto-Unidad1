@@ -2119,6 +2119,7 @@ footer {
 }
 
 
+<<<<<<< HEAD
 /* ---- TARJETAS DE PRODUCTO¿ ---- */
 
 .producto-card {
@@ -2183,3 +2184,57 @@ footer {
 .btn-producto:hover {
     opacity: 0.85;
 }
+=======
+
+
+
+
+
+
+
+
+
+
+
+
+.carrusel-contenedor {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin: 30px 0;
+}
+
+.carrusel {
+    display: flex;
+    overflow: hidden;
+    scroll-behavior: smooth;
+    gap: 20px;
+    padding: 10px;
+}
+
+.carrusel .item {
+    min-width: 250px;
+    flex-shrink: 0;
+    background: #fff;
+    border-radius: 10px;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.carrusel-btn {
+    background-color: #0a74da;
+    color: white;
+    border: none;
+    font-size: 25px;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    height: 40px;
+    transition: 0.2s;
+}
+
+.carrusel-btn:hover {
+    background: #0559a5;
+}
+>>>>>>> devs4
