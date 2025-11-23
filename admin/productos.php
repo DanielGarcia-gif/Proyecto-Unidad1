@@ -44,49 +44,49 @@ $cats = $conn->query("SELECT categoria FROM productos WHERE categoria IS NOT NUL
 
         <h3>Agregar producto / variante</h3>
         <div class="form-producto">
-        <form action="../php/admin_productos_action.php" method="post">
-            <input type="hidden" name="action" value="add">
-            <label>Nombre del producto</label>
-            <input type="text" name="nombre" required>
+            <form action="../php/admin_productos_action.php" method="post">
+                <input type="hidden" name="action" value="add">
+                <label>Nombre del producto</label>
+                <input type="text" name="nombre" required>
 
-            <label>Descripción</label>
-            <input type="text" name="descripcion">
+                <label>Descripción</label>
+                <input type="text" name="descripcion">
 
-            <label>Categoría</label>
-            <select name="categoria">
-                <option value="">-- Seleccionar categoría --</option>
-                <?php while ($c = $cats->fetch_assoc()): ?>
-                    <option value="<?php echo htmlspecialchars($c['categoria']); ?>"><?php echo htmlspecialchars($c['categoria']); ?></option>
-                <?php endwhile; ?>
-            </select>
+                <label>Categoría</label>
+                <select name="categoria">
+                    <option value="">-- Seleccionar categoría --</option>
+                    <?php while ($c = $cats->fetch_assoc()): ?>
+                        <option value="<?php echo htmlspecialchars($c['categoria']); ?>"><?php echo htmlspecialchars($c['categoria']); ?></option>
+                    <?php endwhile; ?>
+                </select>
 
-            <label>Material</label>
-            <input type="text" name="material">
+                <label>Material</label>
+                <input type="text" name="material">
 
-            <label>Color</label>
-            <select name="id_color">
-                <option value="">--Seleccionar color--</option>
-                <?php while($row = $colores->fetch_assoc()): ?>
-                    <option value="<?php echo $row['id_color']; ?>"><?php echo htmlspecialchars($row['nombre_color']); ?></option>
-                <?php endwhile; ?>
-            </select>
+                <label>Color</label>
+                <select name="id_color">
+                    <option value="">--Seleccionar color--</option>
+                    <?php while($row = $colores->fetch_assoc()): ?>
+                        <option value="<?php echo $row['id_color']; ?>"><?php echo htmlspecialchars($row['nombre_color']); ?></option>
+                    <?php endwhile; ?>
+                </select>
 
-            <label>Talla</label>
-            <select name="id_talla">
-                <option value="">--Seleccionar talla--</option>
-                <?php while($row = $tallas->fetch_assoc()): ?>
-                    <option value="<?php echo $row['id_talla']; ?>"><?php echo htmlspecialchars($row['nombre_talla']); ?></option>
-                <?php endwhile; ?>
-            </select>
+                <label>Talla</label>
+                <select name="id_talla">
+                    <option value="">--Seleccionar talla--</option>
+                    <?php while($row = $tallas->fetch_assoc()): ?>
+                        <option value="<?php echo $row['id_talla']; ?>"><?php echo htmlspecialchars($row['nombre_talla']); ?></option>
+                    <?php endwhile; ?>
+                </select>
 
-            <label>Precio</label>
-            <input type="number" step="0.01" name="precio" required>
+                <label>Precio</label>
+                <input type="number" step="0.01" name="precio" required>
 
-            <label>Stock</label>
-            <input type="number" name="stock" value="0" required>
+                <label>Stock</label>
+                <input type="number" name="stock" value="0" required>
 
-            <button type="submit">Agregar</button>
-        </form>
+                <button type="submit">Agregar</button>
+            </form>
         </div>
 
         <h3>Variantes existentes</h3>
