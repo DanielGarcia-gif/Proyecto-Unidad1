@@ -51,6 +51,61 @@ try {
             $id_producto = $ins->insert_id;
         }
 
+        // --- Procesar subida de imagen si existe ---
+        if (!empty($_FILES['imagen']) && isset($_FILES['imagen']['tmp_name']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
+            $file = $_FILES['imagen'];
+            $tmp = $file['tmp_name'];
+            $origName = $file['name'];
+            $size = $file['size'];
+
+            // Validaciones básicas
+            $maxSize = 5 * 1024 * 1024; // 5 MB
+            $allowedExt = ['jpg','jpeg','png','gif','webp'];
+            $ext = strtolower(pathinfo($origName, PATHINFO_EXTENSION));
+            if ($size > $maxSize) {
+                throw new Exception('Imagen demasiado grande (máx 5MB)');
+            }
+            if (!in_array($ext, $allowedExt)) {
+                throw new Exception('Tipo de imagen no permitido');
+            }
+
+            // Carpeta destino: usar únicamente las carpetas existentes bajo img/Catalogo
+            $allowedCategories = ['Pantalones','Playeras','Sudaderas','Tenis'];
+            if (!in_array($categoria, $allowedCategories, true)) {
+                throw new Exception('Categoría inválida. Usa una de: ' . implode(', ', $allowedCategories));
+            }
+
+            $targetDir = __DIR__ . '/../img/Catalogo/' . $categoria;
+            // No crear carpetas automáticamente: si no existe, fallar y pedir al admin que cree la carpeta
+            if (!is_dir($targetDir)) {
+                throw new Exception('La carpeta de la categoría no existe en img/Catalogo: ' . $categoria);
+            }
+
+            // Usar el nombre original del archivo (sanitizado), no renombrar
+            $baseName = basename($origName);
+            // Reemplazar caracteres no permitidos por '_' (permitir letras, números, guiones, underscores, puntos)
+            $safeName = preg_replace('/[^A-Za-z0-9_.\-]/', '_', $baseName);
+            // Limitar longitud a 150 chars
+            if (strlen($safeName) > 150) {
+                $safeName = substr($safeName, -150);
+            }
+
+            $targetPath = $targetDir . '/' . $safeName;
+
+            // Si existe el archivo y no quieres renombrar, lo sobrescribimos
+            if (!move_uploaded_file($tmp, $targetPath)) {
+                throw new Exception('Error moviendo la imagen subida');
+            }
+
+            // Ruta relativa para guardar en BD (web)
+            $webPath = 'img/Catalogo/' . $categoria . '/' . $safeName;
+
+            // Actualizar la columna imagen en productos (si existe la columna)
+            $upimg = $conn->prepare("UPDATE productos SET imagen = ? WHERE id_producto = ?");
+            $upimg->bind_param('si', $webPath, $id_producto);
+            $upimg->execute();
+        }
+
         // Insertar variante
         $sqlv = "INSERT INTO variantesProducto (id_producto, id_color, id_talla, precio, stock) VALUES (?, ?, ?, ?, ?)";
         $stmtv = $conn->prepare($sqlv);

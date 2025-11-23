@@ -42,7 +42,7 @@
             <a href="registro.php">Registro / Login</a>
         <?php endif; ?>
 
-        <a href="contacto.html">Contacto</a>
+        <a href="contacto.php">Contacto</a>
     </nav>
 </header>
 

@@ -33,8 +33,6 @@ $cats = $conn->query("SELECT categoria FROM productos WHERE categoria IS NOT NUL
         <nav class="menu">
             <a href="dashboard.php">Dashboard</a>
             <a href="productos.php" class="activo">Productos</a>
-            <a href="#">Usuarios</a>
-            <a href="#">Pedidos</a>
             <a href="../index.php">Salir</a>
         </nav>
     </header>
@@ -44,7 +42,7 @@ $cats = $conn->query("SELECT categoria FROM productos WHERE categoria IS NOT NUL
 
         <h3>Agregar producto / variante</h3>
         <div class="form-producto">
-        <form action="../php/admin_productos_action.php" method="post">
+        <form action="../php/admin_productos_action.php" method="post" enctype="multipart/form-data">
             <input type="hidden" name="action" value="add">
             <label>Nombre del producto</label>
             <input type="text" name="nombre" required>
@@ -53,11 +51,14 @@ $cats = $conn->query("SELECT categoria FROM productos WHERE categoria IS NOT NUL
             <input type="text" name="descripcion">
 
             <label>Categoría</label>
-            <select name="categoria">
+            <select name="categoria" required>
                 <option value="">-- Seleccionar categoría --</option>
-                <?php while ($c = $cats->fetch_assoc()): ?>
-                    <option value="<?php echo htmlspecialchars($c['categoria']); ?>"><?php echo htmlspecialchars($c['categoria']); ?></option>
-                <?php endwhile; ?>
+                <?php
+                $fixedCats = ['Pantalones','Playeras','Sudaderas','Tenis'];
+                foreach ($fixedCats as $fc):
+                ?>
+                    <option value="<?php echo $fc; ?>"><?php echo $fc; ?></option>
+                <?php endforeach; ?>
             </select>
 
             <label>Material</label>
@@ -84,6 +85,9 @@ $cats = $conn->query("SELECT categoria FROM productos WHERE categoria IS NOT NUL
 
             <label>Stock</label>
             <input type="number" name="stock" value="0" required>
+
+            <label>Imagen del producto</label>
+            <input type="file" name="imagen" accept="image/*">
 
             <button type="submit">Agregar</button>
         </form>
@@ -119,7 +123,7 @@ $cats = $conn->query("SELECT categoria FROM productos WHERE categoria IS NOT NUL
                         <form action="../php/admin_productos_action.php" method="post" style="display:inline">
                             <input type="hidden" name="action" value="delete">
                             <input type="hidden" name="id_variante" value="<?php echo $v['id_variante']; ?>">
-                            <button type="submit" onclick="return confirm('Eliminar variante?')">Eliminar</button>
+                            <button style="background-color: #e63946;" type="submit" onclick="return confirm('Eliminar variante?')">Eliminar</button>
                         </form>
                         
                         <form action="../php/admin_productos_action.php" method="post" style="display:inline;margin-left:8px">
@@ -127,7 +131,7 @@ $cats = $conn->query("SELECT categoria FROM productos WHERE categoria IS NOT NUL
                             <input type="hidden" name="id_variante" value="<?php echo $v['id_variante']; ?>">
                             <input type="number" step="0.01" name="precio" value="<?php echo number_format($v['precio'],2,'.',''); ?>" style="width:80px"> 
                             <input type="number" name="stock" value="<?php echo $v['stock']; ?>" style="width:60px"> 
-                            <button type="submit">Actualizar</button>
+                            <button style="background-color: #0d6efd;" type="submit">Actualizar</button>
                         </form>
                     </td>
                 </tr>

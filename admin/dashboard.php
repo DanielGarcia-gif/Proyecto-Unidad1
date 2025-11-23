@@ -15,8 +15,6 @@ requireAdmin();
         <div class="logo">FaDa Sports - Admin</div>
         <nav class="menu">
             <a href="productos.php">Productos</a>
-            <a href="#">Usuarios</a>
-            <a href="#">Pedidos</a>
             <a href="../index.php">Salir</a>
         </nav>
     </header>
@@ -27,8 +25,6 @@ requireAdmin();
 
         <div class="admin-cards">
             <a class="dash-card" href="productos.php">Gestionar Productos</a>
-            <a class="dash-card" href="#">Gestionar Usuarios</a>
-            <a class="dash-card" href="#">Ver Pedidos</a>
         </div>
     </section>
 
