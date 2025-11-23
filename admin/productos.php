@@ -119,7 +119,7 @@ $cats = $conn->query("SELECT categoria FROM productos WHERE categoria IS NOT NUL
                         <form action="../php/admin_productos_action.php" method="post" style="display:inline">
                             <input type="hidden" name="action" value="delete">
                             <input type="hidden" name="id_variante" value="<?php echo $v['id_variante']; ?>">
-                            <button type="submit" onclick="return confirm('Eliminar variante?')">Eliminar</button>
+                            <button style="background-color: #e63946;" type="submit" onclick="return confirm('Eliminar variante?')">Eliminar</button>
                         </form>
                         
                         <form action="../php/admin_productos_action.php" method="post" style="display:inline;margin-left:8px">
@@ -127,7 +127,7 @@ $cats = $conn->query("SELECT categoria FROM productos WHERE categoria IS NOT NUL
                             <input type="hidden" name="id_variante" value="<?php echo $v['id_variante']; ?>">
                             <input type="number" step="0.01" name="precio" value="<?php echo number_format($v['precio'],2,'.',''); ?>" style="width:80px"> 
                             <input type="number" name="stock" value="<?php echo $v['stock']; ?>" style="width:60px"> 
-                            <button type="submit">Actualizar</button>
+                            <button style="background-color: #0d6efd;" type="submit">Actualizar</button>
                         </form>
                     </td>
                 </tr>
