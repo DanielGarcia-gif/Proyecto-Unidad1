@@ -69,7 +69,7 @@ unset($_SESSION['register_error'], $_SESSION['login_error']);
                         <input type="text" name="nombre" placeholder="Nombre completo" required>
                         <input type="email" name="email" placeholder="Correo electrónico" required>
                         <input type="password" name="password" placeholder="Contraseña" required>
-                        <input type="tel" name="telefono" placeholder="Teléfono (opcional)">
+                        <!-- <input type="tel" name="telefono" placeholder="Teléfono (opcional)"> -->
                         <input type="submit" value="Registrarse" class="btn">
                     </form>
                 </div>
