@@ -83,5 +83,7 @@ unset($_SESSION['register_error'], $_SESSION['login_error']);
     <p>&copy; 2025 FaDa Sports. Todos los derechos reservados.</p>
 </footer>
 
+<script src="js/validacion_password.js"></script>
+
 </body>
 </html>

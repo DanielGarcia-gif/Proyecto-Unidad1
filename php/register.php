@@ -68,12 +68,14 @@ if ($stmt->execute()) {
     $_SESSION['id_usuario'] = $user_id;
     $_SESSION['id_rol'] = $id_rol;
     $_SESSION['nombre'] = $nombre;
-    header('Location: ../index.php');
+    header('Location: ../registro.php');
     exit;
 } else {
     $_SESSION['register_error'] = 'Error al registrar. Intenta de nuevo.';
     header('Location: ../registro.php');
     exit;
 }
+
+//header('Location: ../index.php');
 
 ?>
